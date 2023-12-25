@@ -2,16 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 {
   imports =
-  [ # Include the results of the hardware scan.
+  with inputs; [ # Include the results of the hardware scan.
     ./disko-config.nix
     ./hardware-configuration.nix
-    # "${builtins.fetchTarball "https://github.com/mic92/sops-nix/archive/master.tar.gz"}/modules/sops"
-    "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
-    "${builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz"}/nixos.nix"
+    disko.nixosModules.disko
+    hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
+    impermanence.nixosModules.impermanence
   ];
 
   boot.loader.grub.enable = true;

@@ -1,12 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, inputs, lib, pkgs, ... }:
-
 {
-  imports =
-  with inputs; [ # Include the results of the hardware scan.
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = with inputs; [
+    # Include the results of the hardware scan.
     ./disko-config.nix
     ./hardware-configuration.nix
     disko.nixosModules.disko
@@ -26,11 +29,11 @@
   #     description = "Rollback ZFS datasets to a pristine state";
   #     wantedBy = [
   #       "initrd.target"
-  #     ]; 
+  #     ];
   #     after = [
   #       "zfs-import-zroot.service"
   #     ];
-  #     before = [ 
+  #     before = [
   #       "sysroot.mount"
   #     ];
   #     path = with pkgs; [
@@ -118,7 +121,7 @@
   users.users.joao = {
     isNormalUser = true;
     description = "João";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       firefox
       tree
@@ -132,8 +135,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -172,7 +175,12 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       "/var/log"
-      { directory = "/home/joao"; user = "joao"; group = "users"; mode = "0700"; }
+      {
+        directory = "/home/joao";
+        user = "joao";
+        group = "users";
+        mode = "0700";
+      }
     ];
     files = [
       "/etc/machine-id"

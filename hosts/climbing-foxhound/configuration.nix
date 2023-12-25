@@ -46,7 +46,7 @@
   # boot.plymouth.enable = true;
 
   # boot.initrd.luks.devices."luks-0c5de71c-d8df-4a6c-9114-9df2cb1f2b99".device = "/dev/disk/by-uuid/0c5de71c-d8df-4a6c-9114-9df2cb1f2b99";
-  networking.hostName = "climbing-foxhound"; # Define your hostname.
+  networking.hostName = lib.mkDefault (builtins.baseNameOf ./.); # Define your hostname.
   networking.hostId = "8425e349";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

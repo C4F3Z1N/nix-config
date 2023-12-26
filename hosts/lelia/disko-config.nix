@@ -51,6 +51,7 @@
           canmount = "off";
           compression = "zstd";
           dnodesize = "auto";
+          mountpoint = "none"; # TODO: check if this makes any difference;
           normalization = "formD";
           relatime = "on";
           xattr = "sa";
@@ -80,25 +81,25 @@
             postCreateHook = "zfs snapshot zroot/ephemeral/root@blank";
           };
 
-          "persistent/nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
-          };
-
-          "persistent/stuff" = {
-            type = "zfs_fs";
-            mountpoint = "/persistent";
-            options."com.sun:auto-snapshot" = "false";
-          };
-
-          swap = {
+          "ephemeral/swap" = {
             type = "zfs_volume";
             size = "17G";
             content = {
               type = "swap";
               resumeDevice = true;
             };
+          };
+
+          "persistent/nix" = {
+            type = "zfs_fs";
+            mountpoint = "/nix";
+            options."com.sun:auto-snapshot" = "false";
+          };
+
+          "persistent/storage" = {
+            type = "zfs_fs";
+            mountpoint = "/keep";
+            options."com.sun:auto-snapshot" = "false";
           };
         };
       };

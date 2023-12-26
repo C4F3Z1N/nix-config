@@ -96,7 +96,7 @@
       enable = true;
       hostKeys = [
         {
-          path = "/persistent/etc/ssh/ssh_host_ed25519_key";
+          path = "/keep/etc/ssh/ssh_host_ed25519_key";
           type = "ed25519";
         }
       ];
@@ -107,7 +107,7 @@
     systemPackages = with pkgs; [
     ];
 
-    persistence."/persistent" = {
+    persistence."/keep" = {
       directories = [
         "/etc/NetworkManager/system-connections"
         "/etc/nixos"
@@ -128,7 +128,7 @@
     };
   };
 
-  fileSystems."/persistent".neededForBoot = true;
+  fileSystems."/keep".neededForBoot = true;
 
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";

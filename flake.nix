@@ -13,7 +13,11 @@
     sops.inputs.nixpkgs.follows = "nixpkgs";
     sops.inputs.nixpkgs-stable.follows = "stable-pkgs";
 
+    wayland-pkgs.url = "github:nix-community/nixpkgs-wayland";
+    wayland-pkgs.inputs.nixpkgs.follows = "nixpkgs";
+
     stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = inputs @ {self, ...}: let

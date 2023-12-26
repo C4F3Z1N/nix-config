@@ -161,8 +161,9 @@
   fileSystems."/keep".neededForBoot = true;
 
   nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
     config.allowUnfree = true;
+    hostPlatform = lib.mkDefault "x86_64-linux";
+    overlays = [inputs.wayland-pkgs.overlay];
   };
 
   system.stateVersion = with lib; (versions.majorMinor version);

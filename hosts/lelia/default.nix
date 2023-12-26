@@ -11,6 +11,7 @@
 }: {
   imports = with inputs; [
     ../../common/hosts/nix.nix
+    ../../common/hosts/sops.nix
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     disko.nixosModules.disko

@@ -59,6 +59,21 @@
     '';
   };
 
+  sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key" = {
+    format = "json";
+    key = "ssh_host_ed25519_key";
+    # neededForUsers = true;
+    path = "/etc/ssh/ssh_host_ed25519_key";
+    sopsFile = ./secrets.json;
+  };
+
+  sops.secrets."${config.networking.hostName}/luks_password" = {
+    format = "json";
+    key = "luks_password";
+    # neededForUsers = true;
+    sopsFile = ./secrets.json;
+  };
+
   time.timeZone = "Europe/Copenhagen";
 
   i18n = {
@@ -98,7 +113,8 @@
       enable = true;
       hostKeys = [
         {
-          path = "/keep/etc/ssh/ssh_host_ed25519_key";
+          # path = "/keep/etc/ssh/ssh_host_ed25519_key";
+          inherit (config.sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key") path;
           type = "ed25519";
         }
       ];

@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   disko.devices = {
     disk = {
       main = {
@@ -31,7 +31,7 @@
                 type = "luks";
                 name = "crypted";
                 settings.allowDiscards = true;
-                passwordFile = "/tmp/secret.key";
+                passwordFile = config.sops.secrets."${config.networking.hostName}/luks_password".path;
                 content = {
                   type = "zfs";
                   pool = "zroot";

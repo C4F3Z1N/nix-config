@@ -105,6 +105,8 @@
 
   environment = {
     systemPackages = with pkgs; [
+      tree
+      xsel
     ];
 
     gnome.excludePackages =

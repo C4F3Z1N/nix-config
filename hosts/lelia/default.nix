@@ -34,6 +34,7 @@
 
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
+    zfs.forceImportRoot = false;
   };
 
   hardware = {

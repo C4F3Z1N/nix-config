@@ -165,5 +165,5 @@
     config.allowUnfree = true;
   };
 
-  system.stateVersion = "23.11";
+  system.stateVersion = with lib; (versions.majorMinor version);
 }

@@ -12,6 +12,7 @@
   imports = with inputs; [
     ../../common/hosts/nix.nix
     ../../common/hosts/sops.nix
+    ../../common/users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     disko.nixosModules.disko
@@ -148,21 +149,12 @@
     persistence."/keep" = {
       directories = [
         "/etc/NetworkManager/system-connections"
-        "/etc/nixos"
         "/var/lib/bluetooth"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
         "/var/log"
-        {
-          directory = "/home/joao";
-          user = "joao";
-          group = "users";
-          mode = "0700";
-        }
       ];
-      files = [
-        "/etc/machine-id"
-      ];
+      files = ["/etc/machine-id"];
     };
   };
 
@@ -171,17 +163,6 @@
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
     config.allowUnfree = true;
-  };
-
-  users.users.joao = {
-    isNormalUser = true;
-    description = "João";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-      firefox
-      tree
-    ];
-    hashedPassword = "$y$j9T$Oh.cj23V4oPosds0kR12p/$Dq18ZR07MmeAHvw1UxMjmd1wWnIbpwyYAaIX.nZ8h69";
   };
 
   system.stateVersion = "23.11";

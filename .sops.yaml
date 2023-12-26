@@ -11,6 +11,12 @@ creation_rules:
     - pgp:
       - *joao
 
+  - path_regex: common/users/.*/secrets.json$
+    key_groups:
+    - age:
+      - *repo
+      - *lelia
+
   - path_regex: hosts/lelia/secrets.json$
     key_groups:
     - age:

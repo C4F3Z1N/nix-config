@@ -107,6 +107,24 @@
     systemPackages = with pkgs; [
     ];
 
+    gnome.excludePackages =
+      (with pkgs; [gnome-photos gnome-tour])
+      ++ (with pkgs.gnome; [
+        atomix
+        cheese
+        epiphany
+        evince
+        geary
+        gedit
+        gnome-characters
+        gnome-music
+        gnome-terminal
+        hitori
+        iagno
+        tali
+        totem
+      ]);
+
     persistence."/keep" = {
       directories = [
         "/etc/NetworkManager/system-connections"

@@ -10,7 +10,7 @@
   ...
 }: {
   imports = with inputs; [
-    # Include the results of the hardware scan.
+    ../../common/hosts/nix.nix
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     disko.nixosModules.disko

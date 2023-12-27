@@ -41,6 +41,8 @@
 
       perSystem = { inputs', pkgs, ... }: {
         devShells.default = pkgs.mkShell {
+          NIX_CONFIG =
+            "extra-experimental-features = flakes nix-command repl-flake";
           packages = with pkgs; [
             (inputs'.disko.packages.disko)
             age

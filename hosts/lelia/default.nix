@@ -62,21 +62,6 @@
     '';
   };
 
-  sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key" = {
-    format = "json";
-    key = "ssh_host_ed25519_key";
-    neededForUsers = true;
-    path = "/etc/ssh/ssh_host_ed25519_key";
-    sopsFile = ./secrets.json;
-  };
-
-  sops.secrets."${config.networking.hostName}/luks_password" = {
-    format = "json";
-    key = "luks_password";
-    neededForUsers = true;
-    sopsFile = ./secrets.json;
-  };
-
   time.timeZone = "Europe/Copenhagen";
 
   i18n = {
@@ -116,7 +101,6 @@
       enable = true;
       hostKeys = [{
         path = "/keep/etc/ssh/ssh_host_ed25519_key";
-        # inherit (config.sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key") path;
         type = "ed25519";
       }];
     };
@@ -155,6 +139,18 @@
   };
 
   fileSystems."/keep".neededForBoot = true;
+
+  sops.secrets = let
+    fromJSON' = path: builtins.fromJSON (builtins.readFile path);
+    removeSopsKey = set: lib.filterAttrs (key: _: key != "sops") set;
+
+    format = "json";
+    neededForUsers = true;
+    sopsFile = ./secrets.json;
+  in lib.mapAttrs' (key: _: {
+    name = "${config.networking.hostName}/${key}";
+    value = { inherit format key neededForUsers sopsFile; };
+  }) (removeSopsKey (fromJSON' sopsFile));
 
   nixpkgs = {
     config.allowUnfree = true;

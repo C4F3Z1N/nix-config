@@ -6,15 +6,6 @@ let
   username = "joao";
   displayName = "João";
 in {
-  sops.secrets = {
-    "${username}/password" = {
-      format = "json";
-      key = "password";
-      neededForUsers = true;
-      sopsFile = ./secrets.json;
-    };
-  };
-
   users.users."${username}" = {
     isNormalUser = true;
     description = displayName;
@@ -47,4 +38,16 @@ in {
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
   programs.ssh.startAgent = false;
+
+  sops.secrets = let
+    fromJSON' = path: builtins.fromJSON (builtins.readFile path);
+    removeSopsKey = set: lib.filterAttrs (key: _: key != "sops") set;
+
+    format = "json";
+    neededForUsers = true;
+    sopsFile = ./secrets.json;
+  in lib.mapAttrs' (key: _: {
+    name = "${username}/${key}";
+    value = { inherit format key neededForUsers sopsFile; };
+  }) (removeSopsKey (fromJSON' sopsFile));
 }

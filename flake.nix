@@ -39,7 +39,25 @@
           }) (readDir' ./hosts);
       };
 
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        inputs',
+        pkgs,
+        ...
+      }: {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            (inputs'.disko.packages.disko)
+            age
+            gitMinimal
+            gnupg
+            nixos-anywhere
+            nixos-install-tools
+            pinentry
+            sops
+            ssh-to-age
+          ];
+        };
+
         formatter = pkgs.alejandra;
       };
 

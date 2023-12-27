@@ -6,6 +6,14 @@ let
   username = "joao";
   displayName = "João";
 in {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+    }
+  ];
+
   users.users."${username}" = {
     isNormalUser = true;
     description = displayName;
@@ -50,4 +58,6 @@ in {
     name = "${username}/${key}";
     value = { inherit format key neededForUsers sopsFile; };
   }) (removeSopsKey (fromJSON' sopsFile));
+
+  home-manager.users."${username}" = import (../../home + "/${username}");
 }

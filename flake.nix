@@ -19,17 +19,20 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = inputs@{ self, ... }:
     let
-      lib = with inputs; (nixpkgs.lib // flake-parts.lib);
+      lib = with inputs; (nixpkgs.lib // flake-parts.lib // home-manager.lib);
       readDir' = path:
         lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
     in lib.mkFlake { inherit inputs; } {
-      flake = {
+      flake = rec {
         inherit lib;
 
         nixosConfigurations = lib.mapAttrs (hostName: modulePath:
@@ -37,6 +40,14 @@
             specialArgs = { inherit inputs; };
             modules = [ modulePath ];
           }) (readDir' ./hosts);
+
+        homeConfigurations = {
+          "joao@lelia" = lib.homeManagerConfiguration {
+            inherit (nixosConfigurations.lelia) pkgs;
+            extraSpecialArgs = { inherit inputs; };
+            modules = [ ./common/home/joao ];
+          };
+        };
       };
 
       perSystem = { inputs', pkgs, ... }: {

@@ -23,27 +23,23 @@
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs @ {self, ...}: let
-    lib = with inputs; (nixpkgs.lib // flake-parts.lib);
-    readDir' = path:
-      lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
-  in
-    lib.mkFlake {inherit inputs;} {
+  outputs = inputs@{ self, ... }:
+    let
+      lib = with inputs; (nixpkgs.lib // flake-parts.lib);
+      readDir' = path:
+        lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
+    in lib.mkFlake { inherit inputs; } {
       flake = {
         inherit lib;
 
         nixosConfigurations = lib.mapAttrs (hostName: modulePath:
           lib.nixosSystem {
-            specialArgs = {inherit inputs;};
-            modules = [modulePath];
+            specialArgs = { inherit inputs; };
+            modules = [ modulePath ];
           }) (readDir' ./hosts);
       };
 
-      perSystem = {
-        inputs',
-        pkgs,
-        ...
-      }: {
+      perSystem = { inputs', pkgs, ... }: {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             (inputs'.disko.packages.disko)
@@ -58,9 +54,9 @@
           ];
         };
 
-        formatter = pkgs.alejandra;
+        formatter = pkgs.nixfmt;
       };
 
-      systems = ["aarch64-linux" "x86_64-linux"];
+      systems = [ "aarch64-linux" "x86_64-linux" ];
     };
 }

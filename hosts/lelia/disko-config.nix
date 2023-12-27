@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   disko.devices = {
     disk = {
       main = {
@@ -19,9 +19,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [
-                  "defaults"
-                ];
+                mountOptions = [ "defaults" ];
               };
             };
 
@@ -31,7 +29,8 @@
                 type = "luks";
                 name = "crypted";
                 settings.allowDiscards = true;
-                passwordFile = config.sops.secrets."${config.networking.hostName}/luks_password".path;
+                passwordFile =
+                  config.sops.secrets."${config.networking.hostName}/luks_password".path;
                 content = {
                   type = "zfs";
                   pool = "zroot";

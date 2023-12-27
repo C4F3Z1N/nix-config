@@ -1,14 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{
-  config,
-  inputs,
-  lib,
-  modulesPath,
-  pkgs,
-  ...
-}: {
+{ config, inputs, lib, modulesPath, pkgs, ... }: {
   imports = with inputs; [
     ../../common/hosts/nix.nix
     ../../common/hosts/sops.nix
@@ -28,18 +21,27 @@
     };
 
     initrd = {
-      availableKernelModules = ["nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-      kernelModules = [];
-      postDeviceCommands = lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
+      availableKernelModules = [
+        "nvme"
+        "ehci_pci"
+        "xhci_pci"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_pci_sdmmc"
+      ];
+      kernelModules = [ ];
+      postDeviceCommands =
+        lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
     };
 
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
     zfs.forceImportRoot = false;
   };
 
   hardware = {
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.amd.updateMicrocode =
+      lib.mkDefault config.hardware.enableRedistributableFirmware;
     pulseaudio.enable = false;
   };
 
@@ -63,7 +65,7 @@
   sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key" = {
     format = "json";
     key = "ssh_host_ed25519_key";
-    # neededForUsers = true;
+    neededForUsers = true;
     path = "/etc/ssh/ssh_host_ed25519_key";
     sopsFile = ./secrets.json;
   };
@@ -71,7 +73,7 @@
   sops.secrets."${config.networking.hostName}/luks_password" = {
     format = "json";
     key = "luks_password";
-    # neededForUsers = true;
+    neededForUsers = true;
     sopsFile = ./secrets.json;
   };
 
@@ -112,24 +114,18 @@
 
     openssh = {
       enable = true;
-      hostKeys = [
-        {
-          # path = "/keep/etc/ssh/ssh_host_ed25519_key";
-          inherit (config.sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key") path;
-          type = "ed25519";
-        }
-      ];
+      hostKeys = [{
+        path = "/keep/etc/ssh/ssh_host_ed25519_key";
+        # inherit (config.sops.secrets."${config.networking.hostName}/ssh_host_ed25519_key") path;
+        type = "ed25519";
+      }];
     };
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      tree
-      xsel
-    ];
+    systemPackages = with pkgs; [ tree xsel ];
 
-    gnome.excludePackages =
-      (with pkgs; [gnome-photos gnome-tour])
+    gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
       ++ (with pkgs.gnome; [
         atomix
         cheese
@@ -154,7 +150,7 @@
         "/var/lib/systemd/coredump"
         "/var/log"
       ];
-      files = ["/etc/machine-id"];
+      files = [ "/etc/machine-id" ];
     };
   };
 
@@ -163,7 +159,7 @@
   nixpkgs = {
     config.allowUnfree = true;
     hostPlatform = lib.mkDefault "x86_64-linux";
-    overlays = [inputs.wayland-pkgs.overlay];
+    overlays = [ inputs.wayland-pkgs.overlay ];
   };
 
   system.stateVersion = with lib; (versions.majorMinor version);

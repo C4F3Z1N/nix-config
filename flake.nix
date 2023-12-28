@@ -59,6 +59,8 @@
         devShells.default = pkgs.mkShell {
           NIX_CONFIG =
             "extra-experimental-features = flakes nix-command repl-flake";
+          NIXPKGS_ALLOW_UNFREE = 1;
+
           packages = with pkgs; [
             (inputs'.disko.packages.disko)
             age

@@ -1,14 +1,11 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [ ./browsers.nix ./keyring.nix ./misc.nix ./shells.nix ];
 
   home = {
     username = builtins.baseNameOf ./.;
     homeDirectory = "/home/${config.home.username}";
 
-    sessionVariables = {
-      NIXPKGS_ALLOW_UNFREE =
-        builtins.toString (config.nixpkgs.config.allowUnfree);
-    };
+    sessionVariables = { NIXPKGS_ALLOW_UNFREE = 1; };
   };
 
   programs.home-manager.enable = true;

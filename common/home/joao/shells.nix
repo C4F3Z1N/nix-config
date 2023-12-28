@@ -2,9 +2,13 @@
   programs = {
     bash.enable = true;
 
-    nushell = {
+    nushell = let
+      defaultFromSrc = type:
+        "${pkgs.nushell.src}/crates/nu-utils/src/sample_config/default_${type}.nu";
+    in {
       enable = true;
-      # TODO: add envFile and configFile;
+      envFile.text = (builtins.readFile (defaultFromSrc "env")) + "";
+      configFile.text = (builtins.readFile (defaultFromSrc "config")) + "";
     };
 
     git = {

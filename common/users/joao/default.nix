@@ -18,7 +18,7 @@ in {
     isNormalUser = true;
     description = displayName;
     extraGroups = [ "docker" "networkmanager" "wheel" ];
-    # shell = pkgs.nushell;
+    shell = pkgs.nushell;
     packages = with pkgs;
       [ (inputs.home-manager.packages."${system}".home-manager) ];
     hashedPasswordFile = config.sops.secrets."${username}/password".path;

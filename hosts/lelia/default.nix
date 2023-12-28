@@ -129,6 +129,7 @@
     persistence."/keep" = {
       directories = [
         "/etc/NetworkManager/system-connections"
+        "/etc/nixos"
         "/var/lib/bluetooth"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"

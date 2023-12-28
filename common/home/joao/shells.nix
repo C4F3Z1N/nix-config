@@ -33,6 +33,8 @@
       enableNushellIntegration = false; # it's not working well;
     };
 
+    starship.enable = true;
+
     git = {
       enable = true;
       package = pkgs.gitMinimal;

@@ -7,7 +7,14 @@
         "${pkgs.nushell.src}/crates/nu-utils/src/sample_config/default_${type}.nu";
     in {
       enable = true;
-      envFile.text = (builtins.readFile (defaultFromSrc "env")) + "";
+      envFile.text = (builtins.readFile (defaultFromSrc "env"))
+        + (lib.optionalString (builtins.all (value: value) [
+          config.services.gpg-agent.enable
+          config.services.gpg-agent.enableSshSupport
+        ]) ''
+          $env.GPG_TTY = (tty)
+          $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
+        '');
       configFile.text = (builtins.readFile (defaultFromSrc "config"))
         + (lib.optionalString config.programs.carapace.enable ''
           def --env get-env [name] { $env | get $name }

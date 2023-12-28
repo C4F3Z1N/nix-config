@@ -170,7 +170,7 @@
         "flake-parts": "flake-parts_2",
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": "nixpkgs",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1703466376,
@@ -251,6 +251,7 @@
         ],
         "sops": "sops",
         "stable-pkgs": "stable-pkgs",
+        "treefmt-nix": "treefmt-nix",
         "unstable-pkgs": "unstable-pkgs",
         "wayland-pkgs": "wayland-pkgs"
       }
@@ -310,6 +311,26 @@
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1702979157,
+        "narHash": "sha256-RnFBbLbpqtn4AoJGXKevQMCGhra4h6G2MPcuTSZZQ+g=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "2961375283668d867e64129c22af532de8e77734",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "wayland-pkgs",

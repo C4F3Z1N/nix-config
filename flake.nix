@@ -22,6 +22,9 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
     stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
@@ -32,6 +35,8 @@
       readDir' = path:
         lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
     in lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.treefmt-nix.flakeModule ];
+
       flake = rec {
         inherit lib;
 
@@ -67,7 +72,10 @@
           ];
         };
 
-        formatter = pkgs.nixfmt;
+        treefmt.config = {
+          projectRootFile = "flake.nix";
+          programs.nixfmt.enable = true;
+        };
       };
 
       systems = [ "aarch64-linux" "x86_64-linux" ];

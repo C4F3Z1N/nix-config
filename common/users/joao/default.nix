@@ -19,7 +19,8 @@ in {
     description = displayName;
     extraGroups = [ "docker" "networkmanager" "wheel" ];
     # shell = pkgs.nushell;
-    packages = with pkgs; [ firefox-esr ];
+    packages = with pkgs;
+      [ (inputs.home-manager.packages."${system}".home-manager) ];
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
   };
 

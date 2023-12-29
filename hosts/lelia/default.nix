@@ -3,8 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, inputs, lib, modulesPath, pkgs, ... }: {
   imports = with inputs; [
-    ../../common/hosts/nix.nix
-    ../../common/hosts/sops.nix
+    ../../common/hosts
     ../../common/users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")

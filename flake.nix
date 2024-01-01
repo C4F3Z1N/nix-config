@@ -33,21 +33,14 @@
   };
 
   outputs = inputs@{ self, ... }:
-    let
-      lib = with inputs; (nixpkgs.lib // flake-parts.lib // home-manager.lib);
-      readDir' = path:
-        lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
+    let lib = with inputs; (nixpkgs.lib // flake-parts.lib // home-manager.lib);
     in lib.mkFlake { inherit inputs; } {
       imports = with inputs; [ devshell.flakeModule treefmt-nix.flakeModule ];
 
-      flake = rec {
+      flake = {
         inherit lib;
 
-        nixosConfigurations = lib.mapAttrs (hostName: modulePath:
-          lib.nixosSystem {
-            specialArgs = { inherit inputs; };
-            modules = [ modulePath ];
-          }) (readDir' ./hosts);
+        nixosConfigurations = import ./hosts { inherit inputs lib; };
 
         homeConfigurations = {
           "joao@lelia" = let nixHost = self.nixosConfigurations."lelia";

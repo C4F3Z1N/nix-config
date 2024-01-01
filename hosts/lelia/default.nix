@@ -45,7 +45,7 @@
   };
 
   networking = {
-    hostName = lib.mkDefault (builtins.baseNameOf ./.);
+    hostName = builtins.baseNameOf ./.;
     hostId = "8425e349";
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;

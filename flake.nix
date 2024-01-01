@@ -25,6 +25,9 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    devshell.url = "github:numtide/devshell";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
+
     stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
@@ -35,7 +38,7 @@
       readDir' = path:
         lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
     in lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.treefmt-nix.flakeModule ];
+      imports = with inputs; [ devshell.flakeModule treefmt-nix.flakeModule ];
 
       flake = rec {
         inherit lib;
@@ -56,13 +59,32 @@
       };
 
       perSystem = { inputs', pkgs, ... }: {
-        devShells.default = pkgs.mkShell {
-          NIX_CONFIG =
-            "extra-experimental-features = flakes nix-command repl-flake";
-          NIXPKGS_ALLOW_UNFREE = 1;
+        devshells.default = {
+          env = [
+            {
+              name = "NIX_CONFIG";
+              value =
+                "extra-experimental-features = flakes nix-command repl-flake";
+            }
+            {
+              name = "NIX_PATH";
+              value = "nixpkgs=${inputs.nixpkgs}";
+            }
+            {
+              name = "NIXPKGS_ALLOW_UNFREE";
+              value = 1;
+            }
+          ];
+
+          commands = [{
+            help = "test";
+            name = "info";
+            command = "nix flake show";
+          }];
 
           packages = with pkgs; [
             (inputs'.disko.packages.disko)
+            (inputs'.home-manager.packages.home-manager)
             age
             gitMinimal
             gnupg

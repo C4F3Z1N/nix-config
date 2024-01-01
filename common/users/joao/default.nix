@@ -17,7 +17,7 @@ in {
   users.users."${username}" = {
     isNormalUser = true;
     description = displayName;
-    extraGroups = [ "docker" "networkmanager" "wheel" ];
+    extraGroups = [ "docker" "lxd" "networkmanager" "wheel" ];
     shell = pkgs.nushell;
     packages = with pkgs;
       [ (inputs.home-manager.packages."${system}".home-manager) ];

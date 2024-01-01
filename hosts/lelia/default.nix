@@ -93,6 +93,7 @@
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       layout = "dk";
+      videoDrivers = [ "amdgpu" ];
       xkbVariant = "";
     };
 
@@ -139,6 +140,15 @@
   };
 
   fileSystems."/keep".neededForBoot = true;
+
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+    lxd = {
+      enable = true;
+      recommendedSysctlSettings = true;
+    };
+  };
 
   sops.secrets = let
     fromJSON' = path: builtins.fromJSON (builtins.readFile path);

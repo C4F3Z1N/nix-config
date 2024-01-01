@@ -50,9 +50,13 @@
           }) (readDir' ./hosts);
 
         homeConfigurations = {
-          "joao@lelia" = lib.homeManagerConfiguration {
-            inherit (nixosConfigurations.lelia) pkgs;
-            extraSpecialArgs = { inherit inputs; };
+          "joao@lelia" = let nixHost = self.nixosConfigurations."lelia";
+          in lib.homeManagerConfiguration {
+            inherit (nixHost) pkgs;
+            extraSpecialArgs = {
+              inherit inputs;
+              osConfig = nixHost.config;
+            };
             modules = [ ./common/home/joao ];
           };
         };

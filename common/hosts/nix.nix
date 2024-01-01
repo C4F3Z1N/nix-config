@@ -11,8 +11,8 @@
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
     settings = {
-      auto-optimise-store = lib.mkDefault true;
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      auto-optimise-store = true;
+      experimental-features = [ "flakes" "nix-command" "repl-flake" ];
       flake-registry = null;
       warn-dirty = false;
 

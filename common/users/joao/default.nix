@@ -22,6 +22,10 @@ in {
     packages = with pkgs;
       [ (inputs.home-manager.packages."${system}".home-manager) ];
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
+    openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.fetchurl {
+      url = "https://github.com/c4f3z1n.keys";
+      sha256 = "sha256:0qi41l8pxh1icji8i0zzzvvm6yyw10glz3ljkip0ixxa1a13i4nq";
+    });
   };
 
   environment.persistence."/keep" = {

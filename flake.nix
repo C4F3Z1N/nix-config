@@ -33,7 +33,7 @@
   };
 
   outputs = inputs@{ self, ... }:
-    let lib = with inputs; (nixpkgs.lib // flake-parts.lib // home-manager.lib);
+    let lib = with inputs; (nixpkgs.lib // flake-parts.lib);
     in lib.mkFlake { inherit inputs; } {
       imports = with inputs; [ devshell.flakeModule treefmt-nix.flakeModule ];
 
@@ -41,18 +41,7 @@
         inherit lib;
 
         nixosConfigurations = import ./hosts { inherit inputs lib; };
-
-        homeConfigurations = {
-          "joao@lelia" = let nixHost = self.nixosConfigurations."lelia";
-          in lib.homeManagerConfiguration {
-            inherit (nixHost) pkgs;
-            extraSpecialArgs = {
-              inherit inputs;
-              osConfig = nixHost.config;
-            };
-            modules = [ ./common/home/joao ];
-          };
-        };
+        homeConfigurations = import ./common/home { inherit inputs lib; };
       };
 
       perSystem = { inputs', pkgs, ... }: {

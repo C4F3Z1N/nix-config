@@ -1,6 +1,1 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [
-    slack
-    vscode
-  ];
-}
+{ pkgs, ... }: { home.packages = with pkgs; [ slack vscode ]; }

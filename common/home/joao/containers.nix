@@ -1,1 +1,3 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ docker docker-compose kubectl lxc ]; }
+{ pkgs, ... }: {
+  home.packages = with pkgs; [ docker docker-compose kubectl lxc ];
+}

@@ -2,27 +2,25 @@
   system.autoUpgrade = {
     enable = inputs.self ? rev;
     dates = "hourly";
-    flags = [ "--refresh" "--update-input" "nixpkgs" "-L" ];
+    flags = [ "--refresh" "--print-build-logs" ];
     flake = "github:c4f3z1n/nix-config";
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
-    serviceConfig.ExecCondition = let
-      script = lib.getExe (with pkgs;
-        writeShellApplication {
-          name = "autoUpgrade-validator";
-          runtimeInputs = [ nix yq-go ];
-          text = ''
-            lastModified() {
-              nix flake metadata "$1" --refresh --json | yq '.lastModified'
-            }
-
-            local="$(lastModified ${inputs.self})"
-            remote="$(lastModified ${config.system.autoUpgrade.flake})"
-
-            test "$remote" -gt "$local"
-          '';
-        });
-    in script;
+    serviceConfig.ExecCondition = pkgs.writeTextFile {
+      name = "validate-autoUpgrade.nu";
+      executable = true;
+      text = ''
+        #!${lib.getExe pkgs.nushell}
+        use std assert
+        def metadata [flake: string] {
+          nix flake metadata $flake --refresh --json | from json
+        }
+        let upstream = metadata "${config.system.autoUpgrade.flake}"
+        let local = metadata "${inputs.self}"
+        assert ($upstream.locked.narHash != $local.locked.narHash)
+        assert ($upstream.lastModified > $local.lastModified)
+      '';
+    };
   };
 }

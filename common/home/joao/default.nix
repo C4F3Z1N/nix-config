@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }: {
-  imports = [
-    ./browsers.nix
-    ./containers.nix
-    ./keyring.nix
-    ./misc-cli.nix
-    ./misc-gui.nix
-    ./shells.nix
+{ config, lib, osConfig, pkgs, ... }: {
+  imports = lib.flatten [
+    [
+      ./containers.nix
+      ./keyring.nix
+      ./misc-cli.nix
+      ./shells.nix
+    ]
+
+    # don't import if the host is headless;
+    (lib.optionals osConfig.services.xserver.enable [
+      ./browsers.nix
+      ./misc-gui.nix
+    ])
   ];
 
   home = {

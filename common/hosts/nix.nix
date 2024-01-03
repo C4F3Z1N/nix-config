@@ -3,7 +3,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than +3";
+      options = "--delete-older-than 4d";
     };
 
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];

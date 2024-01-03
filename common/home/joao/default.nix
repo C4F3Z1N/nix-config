@@ -12,7 +12,9 @@
     username = builtins.baseNameOf ./.;
     homeDirectory = "/home/${config.home.username}";
 
-    sessionVariables = { NIXPKGS_ALLOW_UNFREE = 1; };
+    sessionVariables = {
+      NIXPKGS_ALLOW_UNFREE = if pkgs.config.allowUnfree then 1 else 0;
+    };
   };
 
   programs.home-manager.enable = true;

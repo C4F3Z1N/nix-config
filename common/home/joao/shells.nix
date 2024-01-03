@@ -41,10 +41,5 @@
     };
 
     starship.enable = true;
-
-    git = {
-      enable = true;
-      package = pkgs.gitMinimal;
-    };
   };
 }

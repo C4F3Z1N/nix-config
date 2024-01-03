@@ -1,6 +1,12 @@
 { config, lib, pkgs, ... }: {
-  imports =
-    [ ./browsers.nix ./containers.nix ./keyring.nix ./misc.nix ./shells.nix ];
+  imports = [
+    ./browsers.nix
+    ./containers.nix
+    ./keyring.nix
+    ./misc-cli.nix
+    ./misc.nix
+    ./shells.nix
+  ];
 
   home = {
     username = builtins.baseNameOf ./.;

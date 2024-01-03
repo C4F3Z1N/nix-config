@@ -4,7 +4,7 @@
     ./containers.nix
     ./keyring.nix
     ./misc-cli.nix
-    ./misc.nix
+    ./misc-gui.nix
     ./shells.nix
   ];
 

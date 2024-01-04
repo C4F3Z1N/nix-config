@@ -79,6 +79,8 @@
             pinentry
             sops
             ssh-to-age
+            ssh-to-pgp
+            util-linux
           ];
         };
 

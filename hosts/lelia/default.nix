@@ -28,13 +28,11 @@
         "sd_mod"
         "rtsx_pci_sdmmc"
       ];
-      kernelModules = [ ];
       postDeviceCommands =
         lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
     };
 
     kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
     zfs.forceImportRoot = false;
   };
 

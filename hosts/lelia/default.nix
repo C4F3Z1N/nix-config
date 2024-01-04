@@ -28,13 +28,11 @@
         "sd_mod"
         "rtsx_pci_sdmmc"
       ];
-      kernelModules = [ ];
       postDeviceCommands =
         lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
     };
 
     kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
     zfs.forceImportRoot = false;
   };
 
@@ -45,7 +43,7 @@
   };
 
   networking = {
-    hostName = lib.mkDefault (builtins.baseNameOf ./.);
+    hostName = builtins.baseNameOf ./.;
     hostId = "8425e349";
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
@@ -93,15 +91,22 @@
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       layout = "dk";
+      videoDrivers = [ "amdgpu" ];
       xkbVariant = "";
     };
 
     openssh = {
       enable = true;
-      hostKeys = [{
-        path = "/keep/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }];
+      hostKeys = [
+        {
+          path = "/keep/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+        {
+          path = "/keep/etc/ssh/ssh_host_rsa_key";
+          type = "rsa";
+        }
+      ];
     };
   };
 
@@ -139,6 +144,15 @@
   };
 
   fileSystems."/keep".neededForBoot = true;
+
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+    lxd = {
+      enable = true;
+      recommendedSysctlSettings = true;
+    };
+  };
 
   sops.secrets = let
     fromJSON' = path: builtins.fromJSON (builtins.readFile path);

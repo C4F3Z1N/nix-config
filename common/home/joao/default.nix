@@ -1,11 +1,26 @@
-{ config, lib, pkgs, ... }: {
-  imports = [ ./browsers.nix ./keyring.nix ./misc.nix ./shells.nix ];
+{ config, lib, osConfig, pkgs, ... }: {
+  imports = lib.flatten [
+    [
+      ./containers.nix
+      ./keyring.nix
+      ./misc-cli.nix
+      ./shells.nix
+    ]
+
+    # don't import if the host is headless;
+    (lib.optionals osConfig.services.xserver.enable [
+      ./browsers.nix
+      ./misc-gui.nix
+    ])
+  ];
 
   home = {
     username = builtins.baseNameOf ./.;
     homeDirectory = "/home/${config.home.username}";
 
-    sessionVariables = { NIXPKGS_ALLOW_UNFREE = 1; };
+    sessionVariables = {
+      NIXPKGS_ALLOW_UNFREE = if pkgs.config.allowUnfree then 1 else 0;
+    };
   };
 
   programs.home-manager.enable = true;

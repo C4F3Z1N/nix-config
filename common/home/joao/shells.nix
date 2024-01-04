@@ -3,8 +3,9 @@
     bash.enable = true;
 
     nushell = let
+      src = pkgs.srcOnly config.programs.nushell.package;
       defaultFromSrc = type:
-        "${pkgs.nushell.src}/crates/nu-utils/src/sample_config/default_${type}.nu";
+        "${src}/crates/nu-utils/src/sample_config/default_${type}.nu";
     in {
       enable = true;
       envFile.text = (builtins.readFile (defaultFromSrc "env"))
@@ -41,10 +42,5 @@
     };
 
     starship.enable = true;
-
-    git = {
-      enable = true;
-      package = pkgs.gitMinimal;
-    };
   };
 }

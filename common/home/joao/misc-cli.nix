@@ -8,5 +8,9 @@
   programs.git = {
     enable = true;
     package = pkgs.gitMinimal;
+    extraConfig = {
+      init = { defaultBranch = "main"; };
+      push = { autoSetupRemote = true; };
+    };
   };
 }

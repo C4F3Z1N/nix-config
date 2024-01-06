@@ -31,24 +31,8 @@
                 settings.allowDiscards = true;
                 passwordFile = "/tmp/luks_password.txt";
                 content = {
-                  type = "gpt";
-                  partitions = {
-                    swap = {
-                      size = "17G";
-                      content = {
-                        type = "swap";
-                        resumeDevice = true;
-                      };
-                    };
-
-                    zfs = {
-                      size = "100%";
-                      content = {
-                        type = "zfs";
-                        pool = "zroot";
-                      };
-                    };
-                  };
+                  type = "zfs";
+                  pool = "zroot";
                 };
               };
             };
@@ -93,6 +77,15 @@
             mountpoint = "/";
             options."com.sun:auto-snapshot" = "false";
             postCreateHook = "zfs snapshot zroot/ephemeral/root@blank";
+          };
+
+          "ephemeral/swap" = {
+            type = "zfs_volume";
+            size = "17G";
+            content = {
+              type = "swap";
+              resumeDevice = true;
+            };
           };
 
           "persistent/nix" = {

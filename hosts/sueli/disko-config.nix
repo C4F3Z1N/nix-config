@@ -24,7 +24,7 @@
             };
 
             luks = {
-              size = "100%FREE";
+              size = "100%";
               content = {
                 type = "luks";
                 name = "crypted";
@@ -42,7 +42,7 @@
                     };
 
                     zfs = {
-                      size = "100%FREE";
+                      size = "100%";
                       content = {
                         type = "zfs";
                         pool = "zroot";

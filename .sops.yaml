@@ -1,6 +1,7 @@
 keys:
   - &hosts:
     - &lelia age1w7y8sznrsch9088nq2xmyf782nk98qd6rx2q04utt6fuq8rwq5wsluvsjm
+    - &sueli age1tu3tjfjaevyx5pzwytwqgznyeu8ul8n7yphnwg3yyr85m8um5dms5aaknd
   - &users:
     - &repo age172m87hgekagmx476hh2uuu4xpn2657rsrmascqu6per3qq56f3ssd89tgu
     - &joao 724A264781B08135FE89E9FDBE4D78290B7222EA
@@ -16,9 +17,16 @@ creation_rules:
     - age:
       - *repo
       - *lelia
+      - *sueli
 
   - path_regex: hosts/lelia/secrets.json$
     key_groups:
     - age:
       - *repo
       - *lelia
+
+  - path_regex: hosts/sueli/secrets.json$
+    key_groups:
+    - age:
+      - *repo
+      - *sueli

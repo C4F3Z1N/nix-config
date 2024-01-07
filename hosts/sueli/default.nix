@@ -8,6 +8,7 @@
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     disko.nixosModules.disko
+    hardware.nixosModules.lenovo-legion-y530-15ich
     impermanence.nixosModules.impermanence
   ];
 
@@ -19,19 +20,14 @@
     };
 
     initrd = {
-      availableKernelModules = [
-        "ahci"
-        "nvme"
-        "sd_mod"
-        "usb_storage"
-        "usbhid"
-        "xhci_pci"
-      ];
+      availableKernelModules =
+        [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
       postDeviceCommands =
         lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
     };
 
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [ "intel_iommu=on" "iommu=pt" ];
     zfs.forceImportRoot = false;
   };
 

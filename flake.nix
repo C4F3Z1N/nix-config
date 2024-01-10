@@ -58,14 +58,14 @@
             }
             {
               name = "NIXPKGS_ALLOW_UNFREE";
-              value = 1;
+              value = "1";
             }
           ];
 
           commands = [{
-            help = "test";
-            name = "info";
-            command = "nix flake show";
+            help = "update flake lock file";
+            name = "update";
+            command = "nix flake update";
           }];
 
           packages = with pkgs; [

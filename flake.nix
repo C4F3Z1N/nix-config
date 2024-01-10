@@ -9,9 +9,9 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    sops.url = "github:mic92/sops-nix";
-    sops.inputs.nixpkgs.follows = "nixpkgs";
-    sops.inputs.nixpkgs-stable.follows = "stable-pkgs";
+    sops-nix.url = "github:mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "stable-pkgs";
 
     wayland-pkgs.url = "github:nix-community/nixpkgs-wayland";
     wayland-pkgs.inputs.nixpkgs.follows = "nixpkgs";

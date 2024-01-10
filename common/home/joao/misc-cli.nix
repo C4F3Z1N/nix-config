@@ -5,12 +5,19 @@
         [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     ];
 
-  programs.git = {
-    enable = true;
-    package = pkgs.gitMinimal;
-    extraConfig = {
-      init = { defaultBranch = "main"; };
-      push = { autoSetupRemote = true; };
+  programs = {
+    git = {
+      enable = true;
+      package = pkgs.gitMinimal;
+      extraConfig = {
+        init = { defaultBranch = "main"; };
+        push = { autoSetupRemote = true; };
+      };
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
     };
   };
 }

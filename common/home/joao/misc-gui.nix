@@ -1,1 +1,4 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ slack vscode ]; }
+{ lib, osConfig, pkgs, ... }: {
+  home.packages = with pkgs; [ slack virt-manager vscode ];
+}
+

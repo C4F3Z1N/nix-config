@@ -33,6 +33,7 @@
           $current.completions.external = ($current.completions.external
             | default true enable
             | default $carapace_completer completer)
+          $current.show_banner = false
 
           $env.config = $current
         '');

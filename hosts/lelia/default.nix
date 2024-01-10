@@ -109,6 +109,8 @@
     };
   };
 
+  fileSystems."/keep".neededForBoot = true;
+
   environment = {
     systemPackages = with pkgs; [ tree xsel ];
 
@@ -141,8 +143,6 @@
       files = [ "/etc/machine-id" ];
     };
   };
-
-  fileSystems."/keep".neededForBoot = true;
 
   virtualisation = {
     docker.enable = true;

@@ -1,6 +1,6 @@
 { config, inputs, pkgs, lib, ... }: {
   system.autoUpgrade = {
-    enable = inputs.self ? rev;
+    enable = inputs.self ? rev; # disable if dirty;
     dates = "hourly";
     flags = [ "--refresh" "--print-build-logs" ];
     flake = "github:c4f3z1n/nix-config";
@@ -8,13 +8,13 @@
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
     serviceConfig.ExecCondition = pkgs.writeTextFile {
-      name = "validate-autoUpgrade.nu";
+      name = "autoUpgrade-condition.nu";
       executable = true;
       text = ''
         #!${lib.getExe pkgs.nushell}
         use std assert
         def metadata [flake: string] {
-          nix flake metadata $flake --refresh --json | from json
+          ^nix flake metadata $flake --refresh --json | from json
         }
         let upstream = metadata "${config.system.autoUpgrade.flake}"
         let local = metadata "${inputs.self}"

@@ -13,8 +13,10 @@
           config.services.gpg-agent.enable
           config.services.gpg-agent.enableSshSupport
         ]) ''
-          $env.GPG_TTY = (tty)
-          $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
+          if not ("SSH_CONNECTION" in $env) {
+            $env.GPG_TTY = (tty)
+            $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
+          }
         '');
       configFile.text = (builtins.readFile (defaultFromSrc "config"))
         + (lib.optionalString config.programs.carapace.enable ''

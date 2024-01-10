@@ -1,4 +1,6 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, osConfig, pkgs, ... }:
+let headless = builtins.elem "headless" osConfig.system.nixos.tags;
+in {
   programs = {
     bash.enable = true;
 
@@ -76,6 +78,22 @@
           '';
         }
       ];
+    };
+
+    alacritty = {
+      enable = !headless;
+      settings = {
+        import = [ "${pkgs.alacritty-theme}/monokai_charcoal.yaml" ];
+        live_config_reload = true;
+        scrolling = {
+          history = 10000;
+          multiplier = 5;
+        };
+        shell = lib.mkIf config.programs.tmux.enable {
+          program = lib.getExe config.programs.tmux.package;
+          args = [ "attach" ];
+        };
+      };
     };
   };
 }

@@ -142,6 +142,8 @@
       ];
       files = [ "/etc/machine-id" ];
     };
+
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
   };
 
   virtualisation = {

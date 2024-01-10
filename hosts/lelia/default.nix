@@ -54,10 +54,8 @@
 
   security = {
     rtkit.enable = true;
-    sudo.extraConfig = ''
-      # rollback results in sudo lectures after each reboot
-      Defaults lecture = never
-    '';
+    sudo.extraConfig = "Defaults lecture = never";
+    sudo.wheelNeedsPassword = false;
   };
 
   time.timeZone = "Europe/Copenhagen";

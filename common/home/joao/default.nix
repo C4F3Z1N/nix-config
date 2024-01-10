@@ -19,7 +19,7 @@
     homeDirectory = "/home/${config.home.username}";
 
     sessionVariables = {
-      NIXPKGS_ALLOW_UNFREE = if pkgs.config.allowUnfree then 1 else 0;
+      NIXPKGS_ALLOW_UNFREE = if pkgs.config.allowUnfree then "1" else "0";
     };
   };
 

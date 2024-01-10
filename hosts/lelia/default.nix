@@ -33,6 +33,7 @@
     };
 
     kernelModules = [ "kvm-amd" ];
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
   };
 

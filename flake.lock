@@ -186,6 +186,18 @@
         "type": "github"
       }
     },
+    "my-keys": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-nkBfuSZwT9vpj2Ir45Qd2J/kdoh9yDaHxQkZWoGJ/vc=",
+        "type": "file",
+        "url": "https://github.com/c4f3z1n.keys"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/c4f3z1n.keys"
+      }
+    },
     "nix-eval-jobs": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -268,17 +280,18 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "my-keys": "my-keys",
         "nixpkgs": [
           "stable-pkgs"
         ],
-        "sops": "sops",
+        "sops-nix": "sops-nix",
         "stable-pkgs": "stable-pkgs",
         "treefmt-nix": "treefmt-nix",
         "unstable-pkgs": "unstable-pkgs",
         "wayland-pkgs": "wayland-pkgs"
       }
     },
-    "sops": {
+    "sops-nix": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -288,11 +301,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703387502,
-        "narHash": "sha256-JnWuQmyanPtF8c5yAEFXVWzaIlMxA3EAZCh8XNvnVqE=",
+        "lastModified": 1704753304,
+        "narHash": "sha256-9shh5fYLfLJrxr4NnIoWcO9T3bTFuO5QW9v/wDpq9Xg=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "e523e89763ff45f0a6cf15bcb1092636b1da9ed3",
+        "rev": "0ded57412079011f1210c2fcc10e112427d4c0e6",
         "type": "github"
       },
       "original": {

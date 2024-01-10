@@ -42,6 +42,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    my-keys = {
+      url = "https://github.com/c4f3z1n.keys";
+      flake = false;
+    };
+
     stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };

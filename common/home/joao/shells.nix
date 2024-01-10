@@ -44,6 +44,18 @@
       enableNushellIntegration = false; # it's not working well;
     };
 
-    starship.enable = true;
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        scan_timeout = 10;
+        character = {
+          success_symbol = "[➜](bold green) ";
+          error_symbol = "[✗](bold red) ";
+        };
+        cmd_duration = { min_time = 500; };
+        directory = { truncation_length = 8; };
+      };
+    };
   };
 }

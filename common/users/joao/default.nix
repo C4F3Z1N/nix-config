@@ -28,22 +28,36 @@ in {
     });
   };
 
-  environment.persistence."/keep" = {
-    hideMounts = true;
-    users."${username}" = {
-      directories = [
-        ".config"
-        # ".gnupg"
-        ".mozilla"
-        ".ssh"
-        ".vscode"
-        "Desktop"
-        "Development"
-        "Documents"
-        "Downloads"
-        "Pictures"
-        "Videos"
-      ];
+  environment = {
+    persistence."/keep" = {
+      hideMounts = true;
+      users."${username}" = {
+        directories = [
+          ".config/chromium"
+          ".config/Code"
+          ".config/gcloud"
+          ".config/home-manager"
+          ".config/Slack"
+          ".config/sops"
+          # ".gnupg"
+          ".mozilla"
+          ".ssh"
+          ".vscode"
+          "Desktop"
+          "Development"
+          "Documents"
+          "Downloads"
+          "Pictures"
+          "Videos"
+        ];
+
+        files = [
+          ".config/mimeapps.list"
+          ".config/monitors.xml"
+          ".config/monitors.xml~"
+          ".config/nushell/history.txt"
+        ];
+      };
     };
   };
 

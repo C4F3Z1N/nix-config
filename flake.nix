@@ -64,44 +64,8 @@
       };
 
       perSystem = { inputs', pkgs, ... }: {
-        devshells.default = {
-          env = [
-            {
-              name = "NIX_CONFIG";
-              value =
-                "extra-experimental-features = flakes nix-command repl-flake";
-            }
-            {
-              name = "NIX_PATH";
-              value = "nixpkgs=${inputs.nixpkgs}";
-            }
-            {
-              name = "NIXPKGS_ALLOW_UNFREE";
-              value = "1";
-            }
-          ];
-
-          commands = [{
-            help = "update flake lock file";
-            name = "update";
-            command = "nix flake update";
-          }];
-
-          packages = with pkgs; [
-            (inputs'.disko.packages.disko)
-            (inputs'.home-manager.packages.home-manager)
-            age
-            gitMinimal
-            gnupg
-            nixos-anywhere
-            nixos-install-tools
-            pinentry
-            sops
-            ssh-to-age
-            ssh-to-pgp
-            util-linux
-          ];
-        };
+        devshells.default =
+          import ./common/devshell.nix { inherit inputs' pkgs; };
 
         treefmt.config = {
           projectRootFile = "flake.nix";

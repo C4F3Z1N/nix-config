@@ -33,14 +33,12 @@
     };
 
     kernelModules = [ "kvm-amd" ];
+    kernelPackages =
+      lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
   };
 
-  hardware = {
-    cpu.amd.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
-    pulseaudio.enable = false;
-  };
+  hardware.pulseaudio.enable = false;
 
   networking = {
     hostName = builtins.baseNameOf ./.;
@@ -53,10 +51,8 @@
 
   security = {
     rtkit.enable = true;
-    sudo.extraConfig = ''
-      # rollback results in sudo lectures after each reboot
-      Defaults lecture = never
-    '';
+    sudo.extraConfig = "Defaults lecture = never";
+    sudo.wheelNeedsPassword = false;
   };
 
   time.timeZone = "Europe/Copenhagen";
@@ -110,25 +106,28 @@
     };
   };
 
+  fileSystems."/keep".neededForBoot = true;
+
   environment = {
     systemPackages = with pkgs; [ tree xsel ];
 
-    gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
-      ++ (with pkgs.gnome; [
-        atomix
-        cheese
-        epiphany
-        evince
-        geary
-        gedit
-        gnome-characters
-        gnome-music
-        gnome-terminal
-        hitori
-        iagno
-        tali
-        totem
-      ]);
+    gnome.excludePackages = with (pkgs // pkgs.gnome); [
+      gnome-photos
+      gnome-tour
+      atomix
+      cheese
+      epiphany
+      evince
+      geary
+      gedit
+      gnome-characters
+      gnome-music
+      gnome-terminal
+      hitori
+      iagno
+      tali
+      totem
+    ];
 
     persistence."/keep" = {
       directories = [
@@ -141,9 +140,9 @@
       ];
       files = [ "/etc/machine-id" ];
     };
-  };
 
-  fileSystems."/keep".neededForBoot = true;
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+  };
 
   virtualisation = {
     docker.enable = true;

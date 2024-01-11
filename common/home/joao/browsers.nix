@@ -7,24 +7,10 @@
         "${config.home.username}" = {
           isDefault = true;
           search = {
-            default = "ddg"; # custom DuckDuckGo;
-            engines = let updateInterval = 24 * 60 * 60 * 1000; # every day
-            in {
-              ddg = {
-                inherit updateInterval;
-                urls = [{
-                  template = "https://ddg.gg";
-                  params = lib.mapAttrsToList lib.nameValuePair {
-                    kae = "d"; # dark theme;
-                    kh = 1;
-                    q = "{searchTerms}";
-                  };
-                }];
-                iconUpdateURL = "https://ddg.gg/favicon.ico";
-              };
-
+            force = true;
+            default = "DuckDuckGo";
+            engines = {
               "Nix Packages" = {
-                inherit updateInterval;
                 urls = [{
                   template = "https://search.nixos.org/packages";
                   params = lib.mapAttrsToList lib.nameValuePair {
@@ -32,7 +18,8 @@
                     query = "{searchTerms}";
                   };
                 }];
-                iconUpdateURL = "https://nixos.org/favicon.png";
+                icon =
+                  "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@nixpkgs" "@np" ];
               };
 
@@ -45,12 +32,8 @@
                   "${pkgs.gnome.adwaita-icon-theme}/share/icons/Adwaita/scalable/places/user-home.svg";
                 definedAliases = [ "@home-manager" "@hm" ];
               };
-
-              "Amazon".metaData.hidden = true;
-              "Bing".metaData.hidden = true;
-              "DuckDuckGo".metaData.hidden = true;
-              "Google".metaData.hidden = true;
-            };
+            } // lib.genAttrs [ "Amazon" "Bing" "Google" ]
+              (_: { metaData.hidden = true; });
           };
         };
       };

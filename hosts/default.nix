@@ -1,10 +1,14 @@
-{ inputs, lib ? (import <nixpkgs> { }).lib, ... }:
+{ inputs, lib }:
 let
-  readDir' = path:
-    lib.mapAttrs (found: _: path + "/${found}") (builtins.readDir path);
+  dirContent = path:
+    lib.pipe path [
+      (builtins.readDir)
+      (lib.mapAttrs (name: _: path + "/${name}"))
+      (lib.filterAttrs (name: _: name != "default.nix"))
+    ];
 
-  nixosConfigurations =
-    lib.filterAttrs (name: _: name != "default.nix") (readDir' ./.);
+  nixosConfigurations = dirContent ./.;
+
   entries = lib.mapAttrs (_: modulePath:
     lib.nixosSystem {
       specialArgs = { inherit inputs; };

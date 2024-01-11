@@ -8,7 +8,7 @@
     ]
 
     # don't import if the host is headless;
-    (lib.optionals osConfig.services.xserver.enable [
+    (lib.optionals (!builtins.elem "headless" osConfig.system.nixos.tags) [
       ./browsers.nix
       ./misc-gui.nix
     ])

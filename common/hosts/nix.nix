@@ -8,7 +8,11 @@
 
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    registry = lib.pipe inputs [
+      # remove inputs that aren't flakes;
+      (lib.filterAttrs (_: value: value ? _type && value._type == "flake"))
+      (lib.mapAttrs (_: value: { flake = value; }))
+    ];
 
     settings = {
       auto-optimise-store = true;

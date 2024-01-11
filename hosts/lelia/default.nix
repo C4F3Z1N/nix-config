@@ -111,22 +111,23 @@
   environment = {
     systemPackages = with pkgs; [ tree xsel ];
 
-    gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
-      ++ (with pkgs.gnome; [
-        atomix
-        cheese
-        epiphany
-        evince
-        geary
-        gedit
-        gnome-characters
-        gnome-music
-        gnome-terminal
-        hitori
-        iagno
-        tali
-        totem
-      ]);
+    gnome.excludePackages = with (pkgs // pkgs.gnome); [
+      gnome-photos
+      gnome-tour
+      atomix
+      cheese
+      epiphany
+      evince
+      geary
+      gedit
+      gnome-characters
+      gnome-music
+      gnome-terminal
+      hitori
+      iagno
+      tali
+      totem
+    ];
 
     persistence."/keep" = {
       directories = [

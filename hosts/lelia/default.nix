@@ -37,11 +37,7 @@
     zfs.forceImportRoot = false;
   };
 
-  hardware = {
-    cpu.amd.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
-    pulseaudio.enable = false;
-  };
+  hardware.pulseaudio.enable = false;
 
   networking = {
     hostName = builtins.baseNameOf ./.;

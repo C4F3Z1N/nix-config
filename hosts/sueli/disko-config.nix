@@ -27,7 +27,7 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
+                name = "encrypted";
                 settings.allowDiscards = true;
                 passwordFile = "/tmp/luks_password.txt";
                 content = {
@@ -94,10 +94,6 @@
           "persistent/zvol" = {
             type = "zfs_volume";
             size = "200G";
-            # content = {
-            #   type = "nodev";
-            #   # resumeDevice = true;
-            # };
           };
         };
       };

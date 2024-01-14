@@ -27,15 +27,14 @@
     };
 
     kernelModules = [ "kvm-intel" ];
+    kernelPackages =
+      lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
     kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+
     zfs.forceImportRoot = false;
   };
 
-  hardware = {
-    cpu.amd.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
-    pulseaudio.enable = false;
-  };
+  hardware = { pulseaudio.enable = false; };
 
   networking = {
     hostName = builtins.baseNameOf ./.;
@@ -48,10 +47,7 @@
 
   security = {
     rtkit.enable = true;
-    sudo.extraConfig = ''
-      # rollback results in sudo lectures after each reboot
-      Defaults lecture = never
-    '';
+    sudo.extraConfig = "Defaults lecture = never";
   };
 
   time.timeZone = "Europe/Stockholm";
@@ -85,6 +81,18 @@
       enable = true;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
+      # displayManager.lightdm.enable = true;
+      # desktopManager.retroarch.enable = true;
+      desktopManager.retroarch.package = pkgs.retroarch.override {
+        cores = with pkgs.libretro; [
+          mupen64plus
+          pcsx2
+          ppsspp
+          snes9x
+          vba-next
+        ];
+      };
+      layout = "br";
     };
 
     openssh = {

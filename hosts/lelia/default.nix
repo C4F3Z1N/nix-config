@@ -90,8 +90,7 @@
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       layout = "dk";
-      videoDrivers = [ "amdgpu" ];
-      xkbVariant = "";
+      videoDrivers = [ "amdgpu" "modesetting" ];
     };
 
     openssh = {

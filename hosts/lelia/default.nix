@@ -21,12 +21,13 @@
 
     initrd = {
       availableKernelModules = [
-        "nvme"
         "ehci_pci"
-        "xhci_pci"
-        "usb_storage"
-        "sd_mod"
+        "nvme"
         "rtsx_pci_sdmmc"
+        "sd_mod"
+        "thunderbolt"
+        "usb_storage"
+        "xhci_pci"
       ];
       postDeviceCommands =
         lib.mkAfter "zfs rollback -r zroot/ephemeral/root@blank";
@@ -35,6 +36,8 @@
     kernelModules = [ "kvm-amd" ];
     kernelPackages =
       lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelParams = [ "boot.shell_on_fail" ];
+
     zfs.forceImportRoot = false;
   };
 

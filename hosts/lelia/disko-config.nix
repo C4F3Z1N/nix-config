@@ -50,7 +50,7 @@
           canmount = "off";
           compression = "zstd";
           dnodesize = "auto";
-          mountpoint = "none"; # TODO: check if this makes any difference;
+          mountpoint = "legacy";
           normalization = "formD";
           relatime = "on";
           xattr = "sa";
@@ -61,7 +61,7 @@
             type = "zfs_fs";
             options = {
               canmount = "off";
-              mountpoint = "none";
+              mountpoint = "legacy";
             };
           };
 
@@ -69,7 +69,7 @@
             type = "zfs_fs";
             options = {
               canmount = "off";
-              mountpoint = "none";
+              mountpoint = "legacy";
             };
           };
 

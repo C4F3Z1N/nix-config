@@ -64,8 +64,8 @@ in {
       enable = true;
       mouse = true;
       newSession = true;
+      terminal = "screen-256color";
       plugins = with pkgs; [
-        tmuxPlugins.cpu
         {
           plugin = tmuxPlugins.resurrect;
           extraConfig = "set -g @resurrect-strategy-nvim 'session'";

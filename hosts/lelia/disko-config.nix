@@ -27,7 +27,7 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
+                name = "cryptroot";
                 settings.allowDiscards = true;
                 passwordFile =
                   config.sops.secrets."${config.networking.hostName}/luks_password".path;

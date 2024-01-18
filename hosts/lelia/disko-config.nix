@@ -80,15 +80,6 @@
             postCreateHook = "zfs snapshot zroot/ephemeral/root@blank";
           };
 
-          "ephemeral/swap" = {
-            type = "zfs_volume";
-            size = "17G";
-            content = {
-              type = "swap";
-              resumeDevice = true;
-            };
-          };
-
           "persistent/nix" = {
             type = "zfs_fs";
             mountpoint = "/nix";

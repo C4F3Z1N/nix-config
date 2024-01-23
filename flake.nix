@@ -17,11 +17,6 @@
       inputs.nixpkgs-stable.follows = "stable-pkgs";
     };
 
-    wayland-pkgs = {
-      url = "github:nix-community/nixpkgs-wayland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";

@@ -60,6 +60,11 @@ in {
       };
     };
 
+    direnv = {
+      enable = true;
+      nix-direnv = true;
+    };
+
     tmux = {
       enable = true;
       mouse = true;

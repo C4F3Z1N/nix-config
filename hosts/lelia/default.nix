@@ -104,6 +104,8 @@
       ];
     };
 
+    usbmuxd.enable = true;
+
     zfs.autoScrub.enable = true;
     zfs.trim.enable = true;
   };

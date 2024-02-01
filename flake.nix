@@ -46,16 +46,13 @@
     unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs@{ self, ... }:
-    let lib = with inputs; (nixpkgs.lib // flake-parts.lib);
-    in lib.mkFlake { inherit inputs; } {
-      imports = with inputs; [ devshell.flakeModule treefmt-nix.flakeModule ];
+  outputs = inputs@{ devshell, flake-parts, treefmt-nix, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = map (builtins.getAttr "flakeModule") [ devshell treefmt-nix ];
 
       flake = {
-        inherit lib;
-
-        nixosConfigurations = import ./hosts { inherit inputs lib; };
-        homeConfigurations = import ./common/home { inherit inputs lib; };
+        nixosConfigurations = import ./hosts { inherit inputs; };
+        homeConfigurations = import ./common/home { inherit inputs; };
       };
 
       perSystem = { inputs', pkgs, ... }: {

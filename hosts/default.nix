@@ -1,4 +1,4 @@
-{ inputs, lib }:
+{ inputs, lib ? inputs.nixpkgs.lib }:
 let
   dirContent = path:
     lib.pipe path [

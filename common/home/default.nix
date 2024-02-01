@@ -1,5 +1,7 @@
-{ inputs, lib }:
+{ inputs }:
 let
+  lib = with inputs; (nixpkgs.lib // home-manager.lib);
+
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
   inherit (inputs.self) nixosConfigurations;
 

@@ -51,6 +51,7 @@
       imports = map (builtins.getAttr "flakeModule") [ devshell treefmt-nix ];
 
       flake = {
+        url = "github:c4f3z1n/nix-config";
         nixosConfigurations = import ./hosts { inherit inputs; };
         homeConfigurations = import ./common/home { inherit inputs; };
       };

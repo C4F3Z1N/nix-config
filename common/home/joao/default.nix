@@ -15,6 +15,8 @@
   ];
 
   home = {
+    inherit (osConfig.system) stateVersion;
+
     username = builtins.baseNameOf ./.;
     homeDirectory = "/home/${config.home.username}";
 
@@ -26,6 +28,4 @@
   programs.home-manager.enable = true;
 
   systemd.user.startServices = "sd-switch";
-
-  home.stateVersion = with lib; (versions.majorMinor version);
 }

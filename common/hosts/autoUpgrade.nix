@@ -1,16 +1,10 @@
-{ config, inputs, pkgs, lib, ... }:
+{ config, inputs, lib, pkgs, ... }:
 let
-  # attrSet to list;
-  registry = lib.pipe config.nix.registry [
-    (lib.attrValues)
-    (map (builtins.getAttr "flake"))
-  ];
-
   # set 'outPath' to match the registry alias if 'inputs.self' is included;
-  self = inputs.self
-    // lib.optionalAttrs (builtins.any (flake: flake == inputs.self) registry) {
-      outPath = "flake:self";
-    };
+  self = inputs.self // lib.optionalAttrs (lib.pipe config.nix.registry [
+    (lib.attrValues)
+    (builtins.any ({ flake, ... }: flake == inputs.self))
+  ]) { outPath = "flake:self"; };
 in {
   system.autoUpgrade = {
     enable = self ? rev; # disable if dirty;

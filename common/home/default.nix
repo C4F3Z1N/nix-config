@@ -2,9 +2,6 @@
 let
   lib = with inputs; (nixpkgs.lib // home-manager.lib);
 
-  inherit (inputs.home-manager.lib) homeManagerConfiguration;
-  inherit (inputs.self) nixosConfigurations;
-
   dirContent = path:
     lib.pipe path [
       (builtins.readDir)
@@ -12,6 +9,7 @@ let
       (lib.filterAttrs (name: _: name != "default.nix"))
     ];
 
+  inherit (inputs.self) nixosConfigurations;
   homeConfigurations = dirContent ./.;
 
   entries = lib.pipe {
@@ -22,21 +20,24 @@ let
     (lib.mapAttrs (_: value: lib.attrNames value))
     # create all possible combinations of user + host;
     (lib.cartesianProductOfSets)
-    # create config entries for each combination;
-    (map ({ user, host }: {
-      "${user}@${host}" = let
+    # convert to named list entries;
+    (map ({ user, host }:
+      lib.nameValuePair "${user}@${host}" {
         modulePath = homeConfigurations."${user}";
         nixosHost = nixosConfigurations."${host}";
-      in homeManagerConfiguration {
+      }))
+    # convert list to attrSet;
+    (builtins.listToAttrs)
+    # convert to homeManagerConfiguration entries;
+    (lib.mapAttrs (_:
+      { modulePath, nixosHost }:
+      lib.homeManagerConfiguration {
         inherit (nixosHost) pkgs;
         extraSpecialArgs = {
           inherit inputs;
           osConfig = nixosHost.config;
         };
         modules = [ modulePath ];
-      };
     }))
-    # convert list to attrSet;
-    (lib.attrsets.mergeAttrsList)
   ];
 in entries

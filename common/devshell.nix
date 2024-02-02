@@ -25,20 +25,4 @@
       eval = "$(printenv GNUPGHOME || find ~/.gnupg -maxdepth 0 || mktemp -d)";
     }
   ];
-
-  commands = [
-    {
-      name = "check";
-      command = "nix flake check $@";
-    }
-    {
-      help = "update flake lock file";
-      name = "update";
-      command = "nix flake update $@";
-    }
-    {
-      name = "switch";
-      command = "nixos-rebuild switch $@";
-    }
-  ];
 }

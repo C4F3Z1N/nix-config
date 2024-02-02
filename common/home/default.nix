@@ -38,6 +38,6 @@ let
           osConfig = nixosHost.config;
         };
         modules = [ modulePath ];
-    }))
+      }))
   ];
 in entries

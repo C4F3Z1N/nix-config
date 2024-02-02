@@ -9,7 +9,7 @@ in {
   system.autoUpgrade = {
     enable = self ? rev; # disable if dirty;
     dates = "hourly";
-    flags = [ "--refresh" "--print-build-logs" ];
+    flags = [ "--print-build-logs" "--refresh" "--update-input my-flakes" ];
     flake = self.url;
   };
 

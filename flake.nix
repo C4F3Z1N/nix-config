@@ -1,49 +1,21 @@
 {
   inputs = {
-    nixpkgs.follows = "stable-pkgs";
+    my-flakes.url = "github:c4f3z1n/my-flakes";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hardware.url = "github:nixos/nixos-hardware";
-
-    impermanence.url = "github:nix-community/impermanence";
-
-    sops-nix = {
-      url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "stable-pkgs";
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    devshell.follows = "my-flakes/devshell";
+    disko.follows = "my-flakes/disko";
+    flake-parts.follows = "my-flakes/flake-parts";
+    hardware.follows = "my-flakes/nixos-hardware";
+    home-manager.follows = "my-flakes/home-manager";
+    impermanence.follows = "my-flakes/impermanence";
+    nixpkgs.follows = "my-flakes/nixpkgs-stable";
+    sops-nix.follows = "my-flakes/sops-nix";
+    treefmt-nix.follows = "my-flakes/treefmt-nix";
 
     my-keys = {
       url = "https://github.com/c4f3z1n.keys";
       flake = false;
     };
-
-    stable-pkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    unstable-pkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = inputs@{ devshell, flake-parts, treefmt-nix, ... }:

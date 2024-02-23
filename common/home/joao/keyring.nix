@@ -16,7 +16,7 @@
     ssh = {
       enable = true;
       controlMaster = "auto";
-      controlPath = "${config.xdg.cacheHome}/ssh-%r@%h:%p";
+      controlPath = "${config.xdg.cacheHome}/ssh-%r@%h:%p.sock";
       controlPersist = "1h";
     };
   };

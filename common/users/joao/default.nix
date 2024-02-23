@@ -35,36 +35,33 @@ in {
       lib.splitString "\n" (builtins.readFile inputs.my-keys);
   };
 
-  environment = {
-    persistence."/keep" = {
-      hideMounts = true;
-      users."${username}" = {
-        directories = [
-          ".config/chromium"
-          ".config/Code"
-          ".config/gcloud"
-          ".config/home-manager"
-          ".config/Slack"
-          ".config/sops"
-          # ".gnupg"
-          ".mozilla"
-          ".ssh"
-          ".vscode"
-          "Desktop"
-          "Development"
-          "Documents"
-          "Downloads"
-          "Pictures"
-          "Videos"
-        ];
+  environment.persistence."/keep" = {
+    hideMounts = true;
+    users."${username}" = {
+      directories = [
+        ".mozilla"
+        ".ssh"
+        ".vscode"
+        "Desktop"
+        "Development"
+        "Documents"
+        "Downloads"
+        "Pictures"
+        "Videos"
+      ] ++ map (d: ".config/${d}") [
+        "chromium"
+        "Code"
+        "gcloud"
+        "home-manager"
+        "Slack"
+        "sops"
+      ];
 
-        files = [
-          ".config/mimeapps.list"
-          ".config/monitors.xml"
-          ".config/monitors.xml~"
-          ".config/nushell/history.txt"
-        ];
-      };
+      files = map (f: ".config/${f}") [
+        "monitors.xml"
+        "monitors.xml~"
+        "nushell/history.txt"
+      ];
     };
   };
 

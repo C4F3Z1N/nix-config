@@ -24,8 +24,8 @@
       };
     })
     (lib.mkIf config.programs.tmux.enable {
-      "/org/gnome/Console" = {
-        shell = [ lib.getExe config.programs.tmux.package ];
+      "org/gnome/Console" = {
+        shell = [ (lib.getExe config.programs.tmux.package) ];
       };
     })
   ];

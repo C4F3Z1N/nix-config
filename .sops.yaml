@@ -8,17 +8,17 @@ keys:
 creation_rules:
   - path_regex: secrets.json$
     key_groups:
-    - pgp:
-      - *joao
+      - pgp:
+          - *joao
 
   - path_regex: common/users/.*/secrets.json$
     key_groups:
-    - age:
-      - *repo
-      - *lelia
+      - age:
+          - *repo
+          - *lelia
 
   - path_regex: hosts/lelia/secrets.json$
     key_groups:
-    - age:
-      - *repo
-      - *lelia
+      - age:
+          - *repo
+          - *lelia

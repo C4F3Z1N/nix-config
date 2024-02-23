@@ -149,12 +149,11 @@
   };
 
   virtualisation = {
-    docker.enable = true;
     libvirtd.enable = true;
-    lxd = {
-      enable = true;
-      recommendedSysctlSettings = true;
-    };
+    lxd.enable = true;
+    lxd.recommendedSysctlSettings = true;
+    podman.enable = true;
+    podman.dockerSocket.enable = true;
   };
 
   sops.secrets = let

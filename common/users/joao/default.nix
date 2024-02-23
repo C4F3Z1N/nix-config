@@ -17,7 +17,15 @@ in {
   users.users."${username}" = {
     isNormalUser = true;
     description = displayName;
-    extraGroups = [ "docker" "libvirtd" "lxd" "networkmanager" "wheel" ];
+    extraGroups = lib.intersectLists [
+      # add user to the groups below if they exist;
+      "docker"
+      "libvirtd"
+      "lxd"
+      "networkmanager"
+      "podman"
+      "wheel"
+    ] (lib.attrNames config.users.groups);
     shell = pkgs.nushell;
     packages = with pkgs;
       [ (inputs.home-manager.packages."${system}".home-manager) ];

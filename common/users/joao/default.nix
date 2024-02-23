@@ -7,6 +7,7 @@ let
   displayName = "João";
 in {
   imports = [
+    ../.
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
@@ -35,16 +36,6 @@ in {
   };
 
   environment = {
-    etc.shells.text = with config.users.users."${username}";
-      let
-        realpath = lib.getExe shell;
-        altpath = "/run/current-system/sw${shell.shellPath}";
-      in ''
-        # ${username}'s shell;
-        ${realpath}
-        ${altpath}
-      '';
-
     persistence."/keep" = {
       hideMounts = true;
       users."${username}" = {

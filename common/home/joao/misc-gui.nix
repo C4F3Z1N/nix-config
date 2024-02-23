@@ -25,4 +25,6 @@
         };
       })
     ];
+
+  services.copyq.enable = true;
 }

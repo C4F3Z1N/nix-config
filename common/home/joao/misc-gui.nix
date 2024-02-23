@@ -1,5 +1,11 @@
 { lib, osConfig, pkgs, ... }: {
-  home.packages = with pkgs; [ slack virt-manager virt-viewer vscode ];
+  home.packages = with pkgs; [
+    libreoffice
+    slack
+    virt-manager
+    virt-viewer
+    vscode
+  ];
 
   dconf.settings = with osConfig;
     lib.mkMerge [

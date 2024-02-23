@@ -1,4 +1,6 @@
-{ config, lib, osConfig, pkgs, ... }: {
+{ config, lib, osConfig, pkgs, ... }:
+let headless = builtins.elem "headless" osConfig.system.nixos.tags;
+in {
   imports = lib.flatten [
     [
       ./containers.nix
@@ -8,10 +10,7 @@
     ]
 
     # don't import if the host is headless;
-    (lib.optionals (!builtins.elem "headless" osConfig.system.nixos.tags) [
-      ./browsers.nix
-      ./misc-gui.nix
-    ])
+    (lib.optionals (!headless) [ ./browsers.nix ./misc-gui.nix ])
   ];
 
   home = {

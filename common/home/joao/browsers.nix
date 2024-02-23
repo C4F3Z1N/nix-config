@@ -1,5 +1,11 @@
 { config, lib, pkgs, ... }: {
   programs = {
+    chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
+      commandLineArgs = [ "--incognito" ];
+    };
+
     firefox = {
       enable = true;
       package = pkgs.firefox-esr;
@@ -37,12 +43,6 @@
           };
         };
       };
-    };
-
-    chromium = {
-      enable = true;
-      package = pkgs.ungoogled-chromium;
-      commandLineArgs = [ "--incognito" ];
     };
   };
 }

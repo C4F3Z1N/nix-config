@@ -1,4 +1,13 @@
 { config, ... }: {
+  home.packages = with pkgs; [
+    age
+    monkeysphere
+    sops
+    ssh-to-age
+    ssh-to-pgp
+    yubikey-manager
+  ];
+
   programs = {
     gpg = {
       enable = true;

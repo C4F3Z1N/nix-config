@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./nix.nix ./autoUpgrade.nix ./sops.nix ]; }
+{ ... }: { imports = [ ./autoUpgrade.nix ./fonts.nix ./nix.nix ./sops.nix ]; }

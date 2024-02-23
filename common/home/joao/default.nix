@@ -25,6 +25,8 @@
     };
   };
 
+  fonts.fontconfig = { inherit (osConfig.fonts.fontconfig) enable; };
+
   programs.home-manager.enable = true;
 
   systemd.user.startServices = "sd-switch";

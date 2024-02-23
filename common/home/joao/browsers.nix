@@ -44,5 +44,19 @@
         };
       };
     };
+
+    qutebrowser = {
+      enable = true;
+      loadAutoconfig = true;
+      settings = {
+        "editor.command" = [ "xdg-open" "{file}" ];
+        "fonts.default_family" = "Ubuntu";
+        "qt.highdpi" = true;
+        "tabs.show" = "multiple";
+      };
+      extraConfig = ''
+        c.tabs.padding = {"bottom": 10, "left": 10, "right": 10, "top": 10}
+      '';
+    };
   };
 }

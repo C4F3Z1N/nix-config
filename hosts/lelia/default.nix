@@ -121,7 +121,6 @@
       atomix
       cheese
       epiphany
-      evince
       geary
       gedit
       gnome-characters

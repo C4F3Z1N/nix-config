@@ -71,16 +71,19 @@ in {
   programs.ssh.startAgent = false;
 
   sops.secrets = let
-    fromJSON' = path: builtins.fromJSON (builtins.readFile path);
-    removeSopsKey = set: lib.filterAttrs (key: _: key != "sops") set;
-
     format = "json";
     neededForUsers = true;
     sopsFile = ./secrets.json;
-  in lib.mapAttrs' (key: _: {
-    name = "${username}/${key}";
-    value = { inherit format key neededForUsers sopsFile; };
-  }) (removeSopsKey (fromJSON' sopsFile));
+  in lib.pipe sopsFile [
+    (builtins.readFile)
+    (builtins.fromJSON)
+    (lib.attrNames)
+    (map (key:
+      lib.mkIf (key != "sops") {
+        "${username}/${key}" = { inherit format key neededForUsers sopsFile; };
+      }))
+    (lib.mkMerge)
+  ];
 
   home-manager.users."${username}" = import (../../home + "/${username}");
 }

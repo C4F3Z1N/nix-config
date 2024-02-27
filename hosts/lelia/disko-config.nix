@@ -29,8 +29,7 @@
                 type = "luks";
                 name = "cryptroot";
                 settings.allowDiscards = true;
-                passwordFile =
-                  config.sops.secrets."${config.networking.hostName}/luks_password".path;
+                passwordFile = config.sops.secrets.luks_password.path;
                 content = {
                   type = "zfs";
                   pool = "zroot";

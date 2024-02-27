@@ -155,17 +155,8 @@
     podman.dockerSocket.enable = true;
   };
 
-  sops.secrets = let
-    fromJSON' = path: builtins.fromJSON (builtins.readFile path);
-    removeSopsKey = set: lib.filterAttrs (key: _: key != "sops") set;
-
-    format = "json";
-    neededForUsers = true;
-    sopsFile = ./secrets.json;
-  in lib.mapAttrs' (key: _: {
-    name = "${config.networking.hostName}/${key}";
-    value = { inherit format key neededForUsers sopsFile; };
-  }) (removeSopsKey (fromJSON' sopsFile));
+  sops.defaultSopsFile = ./secrets.json;
+  sops.secrets.luks_password.neededForUsers = true;
 
   nixpkgs = {
     config.allowUnfree = true;

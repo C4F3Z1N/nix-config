@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ docker-compose kubectl lxc podman ];
+  home.packages = with pkgs; [ docker docker-compose kubectl lxc ];
 }

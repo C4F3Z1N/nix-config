@@ -75,8 +75,7 @@ in {
     neededForUsers = true;
     sopsFile = ./secrets.json;
   in lib.pipe sopsFile [
-    (builtins.readFile)
-    (builtins.fromJSON)
+    (lib.importJSON)
     (lib.attrNames)
     (map (key:
       lib.mkIf (key != "sops") {

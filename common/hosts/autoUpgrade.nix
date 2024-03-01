@@ -10,7 +10,7 @@ in {
     enable = self ? rev; # disable if dirty;
     dates = "hourly";
     flags = [ "--print-build-logs" "--refresh" ];
-    flake = self.url;
+    flake = "github:c4f3z1n/nix-config";
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {

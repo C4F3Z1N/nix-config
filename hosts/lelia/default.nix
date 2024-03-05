@@ -90,22 +90,8 @@
       videoDrivers = [ "amdgpu" "modesetting" ];
     };
 
-    openssh = {
-      enable = true;
-      hostKeys = [
-        {
-          path = "/keep/etc/ssh/ssh_host_ed25519_key";
-          type = "ed25519";
-        }
-        {
-          path = "/keep/etc/ssh/ssh_host_rsa_key";
-          type = "rsa";
-        }
-      ];
-    };
-
+    openssh.enable = true;
     usbmuxd.enable = true;
-
     zfs.autoScrub.enable = true;
     zfs.trim.enable = true;
   };
@@ -141,7 +127,9 @@
         "/var/lib/systemd/coredump"
         "/var/log"
       ];
-      files = [ "/etc/machine-id" ];
+      files = [ "/etc/machine-id" ]
+        ++ lib.optionals config.services.openssh.enable
+        (map (builtins.getAttr "path") config.services.openssh.hostKeys);
     };
 
     sessionVariables = { NIXOS_OZONE_WL = "1"; };

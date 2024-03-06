@@ -4,7 +4,6 @@
     ../../common/users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
-    disko.nixosModules.disko
     hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
     impermanence.nixosModules.impermanence
   ];

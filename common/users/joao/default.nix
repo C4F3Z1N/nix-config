@@ -28,8 +28,6 @@ in {
       "wheel"
     ] (lib.attrNames config.users.groups);
     shell = pkgs.nushell;
-    packages = with pkgs;
-      [ (inputs.home-manager.packages."${system}".home-manager) ];
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
     openssh.authorizedKeys.keys =
       lib.splitString "\n" (builtins.readFile inputs.my-keys);

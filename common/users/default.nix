@@ -1,4 +1,12 @@
-{ config, lib, ... }: {
+{ config, inputs, lib, ... }: {
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
   environment.etc.shells.text = lib.pipe config.users.users [
     (lib.mapAttrs (username:
       { shell, ... }:

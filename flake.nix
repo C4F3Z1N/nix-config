@@ -53,7 +53,7 @@
 
       flake = {
         nixosConfigurations = import ./hosts { inherit inputs; };
-        homeConfigurations = import ./common/home { inherit inputs; };
+        homeConfigurations = import ./optional/home { inherit inputs; };
       };
 
       perSystem = { inputs', pkgs, ... }: {

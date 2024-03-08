@@ -1,7 +1,7 @@
 { config, inputs, lib, modulesPath, pkgs, ... }: {
   imports = with inputs; [
-    ../../common/hosts
-    ../../common/users/joao
+    ../../global/hosts
+    ../../optional/users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1

@@ -11,7 +11,7 @@ creation_rules:
       - pgp:
           - *joao
 
-  - path_regex: common/users/.*/secrets.json$
+  - path_regex: optional/users/.*/secrets.json$
     key_groups:
       - age:
           - *repo

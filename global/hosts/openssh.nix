@@ -2,7 +2,11 @@
 let
   inherit (config.system.nixos) tags;
   impermanence = builtins.elem "impermanence" tags;
-  prefix = lib.optionalString impermanence "/keep";
+  prefix = lib.pipe config.environment.persistence [
+    (lib.attrNames)
+    (builtins.head)
+    (lib.optionalString impermanence)
+  ];
 in {
   services.openssh = {
     hostKeys = [

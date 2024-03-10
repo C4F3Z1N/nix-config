@@ -1,12 +1,17 @@
-{
+{ config, lib, ... }:
+let
+  inherit (config.system.nixos) tags;
+  impermanence = builtins.elem "impermanence" tags;
+  prefix = lib.optionalString impermanence "/keep";
+in {
   services.openssh = {
     hostKeys = [
       {
-        path = "/etc/ssh/ssh_host_ed25519_key";
+        path = "${prefix}/etc/ssh/ssh_host_ed25519_key";
         type = "ed25519";
       }
       {
-        path = "/etc/ssh/ssh_host_rsa_key";
+        path = "${prefix}/etc/ssh/ssh_host_rsa_key";
         type = "rsa";
       }
     ];

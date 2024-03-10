@@ -23,36 +23,6 @@ in {
       lib.splitString "\n" (builtins.readFile inputs.my-keys);
   };
 
-  environment.persistence."/keep" = {
-    hideMounts = true;
-    users."${username}" = {
-      directories = [
-        ".mozilla"
-        ".ssh"
-        ".vscode"
-        "Desktop"
-        "Development"
-        "Documents"
-        "Downloads"
-        "Pictures"
-        "Videos"
-      ] ++ map (d: ".config/${d}") [
-        "chromium"
-        "Code"
-        "gcloud"
-        "home-manager"
-        "Slack"
-        "sops"
-      ];
-
-      files = map (f: ".config/${f}") [
-        "monitors.xml"
-        "monitors.xml~"
-        "nushell/history.txt"
-      ];
-    };
-  };
-
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 

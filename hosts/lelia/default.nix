@@ -1,11 +1,11 @@
 { config, inputs, lib, modulesPath, pkgs, ... }: {
   imports = with inputs; [
     ../../global/hosts
+    ../../optional/hosts/impermanence.nix
     ../../optional/users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
-    impermanence.nixosModules.impermanence
   ];
 
   boot = {
@@ -95,8 +95,6 @@
     zfs.trim.enable = true;
   };
 
-  fileSystems."/keep".neededForBoot = true;
-
   environment = {
     systemPackages = with pkgs; [ tree xsel ];
 
@@ -116,20 +114,6 @@
       tali
       totem
     ];
-
-    persistence."/keep" = {
-      directories = [
-        "/etc/NetworkManager/system-connections"
-        "/etc/nixos"
-        "/var/lib/bluetooth"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
-        "/var/log"
-      ];
-      files = [ "/etc/machine-id" ]
-        ++ lib.optionals config.services.openssh.enable
-        (map (builtins.getAttr "path") config.services.openssh.hostKeys);
-    };
 
     sessionVariables = { NIXOS_OZONE_WL = "1"; };
   };

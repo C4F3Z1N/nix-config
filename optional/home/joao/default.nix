@@ -1,5 +1,8 @@
 { config, lib, osConfig, pkgs, ... }:
-let headless = builtins.elem "headless" osConfig.system.nixos.tags;
+let
+  inherit (osConfig.system.nixos) tags;
+  headless = builtins.elem "headless" tags;
+  impermanence = builtins.elem "impermanence" tags;
 in {
   imports = lib.flatten [
     [
@@ -11,6 +14,9 @@ in {
 
     # don't import if the host is headless;
     (lib.optionals (!headless) [ ./browsers.nix ./misc-gui.nix ])
+
+    # depends on the "impermanence" tag;
+    (lib.optionals (impermanence) [ ./impermanence.nix ])
   ];
 
   home = {

@@ -54,26 +54,29 @@
     sudo.wheelNeedsPassword = false;
   };
 
-  time.timeZone = "Europe/Copenhagen";
+  time.timeZone = lib.mkDefault "Europe/Copenhagen";
 
   i18n = {
     defaultLocale = "en_DK.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "da_DK.UTF-8";
-      LC_IDENTIFICATION = "da_DK.UTF-8";
-      LC_MEASUREMENT = "da_DK.UTF-8";
-      LC_MONETARY = "da_DK.UTF-8";
-      LC_NAME = "da_DK.UTF-8";
-      LC_NUMERIC = "da_DK.UTF-8";
-      LC_PAPER = "da_DK.UTF-8";
-      LC_TELEPHONE = "da_DK.UTF-8";
-      LC_TIME = "da_DK.UTF-8";
-    };
+    supportedLocales = lib.mkDefault [
+      "en_DK.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
+      "pt_BR.UTF-8/UTF-8"
+    ];
   };
 
   console.keyMap = "dk-latin1";
 
+  location.provider = "geoclue2";
+
   services = {
+    openssh.enable = true;
+    usbmuxd.enable = true;
+    zfs.autoScrub.enable = true;
+    zfs.trim.enable = true;
+
+    geoclue2.enableWifi = false;
+
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -88,27 +91,24 @@
       layout = "dk";
       videoDrivers = [ "amdgpu" "modesetting" ];
     };
-
-    openssh.enable = true;
-    usbmuxd.enable = true;
-    zfs.autoScrub.enable = true;
-    zfs.trim.enable = true;
   };
 
   environment = {
     systemPackages = with pkgs; [ tree xsel ];
 
     gnome.excludePackages = with (pkgs // pkgs.gnome); [
-      gnome-photos
-      gnome-tour
       atomix
       cheese
       epiphany
       geary
       gedit
-      gnome-characters
+      gnome-clocks
+      gnome-maps
       gnome-music
+      gnome-photos
       gnome-terminal
+      gnome-tour
+      gnome-weather
       hitori
       iagno
       tali
@@ -133,5 +133,5 @@
     hostPlatform = lib.mkDefault "x86_64-linux";
   };
 
-  system.stateVersion = with lib; (versions.majorMinor version);
+  system.stateVersion = "23.11";
 }

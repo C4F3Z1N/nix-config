@@ -9,23 +9,21 @@
 
   dconf.settings = lib.mkMerge [
     (lib.mkIf osConfig.services.xserver.desktopManager.gnome.enable {
-      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-      "org/gnome/mutter" = {
-        experimental-features = [ "scale-monitor-framebuffer" ];
+      "org/gnome/Console" = lib.mkIf config.programs.tmux.enable {
+        shell = [ (lib.getExe config.programs.tmux.package) ];
       };
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-      };
+      "org/gnome/desktop/datetime".automatic-timezone = true;
+      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      "org/gnome/mutter".experimental-features =
+        [ "scale-monitor-framebuffer" ];
+      "org/gnome/settings-daemon/plugins/color".night-light-enabled = true;
+      "org/gnome/shell/weather".automatic-location = true;
+      "org/gnome/system/location".enabled = osConfig.services.geoclue2.enable;
     })
     (lib.mkIf osConfig.virtualisation.libvirtd.enable {
       "org/virt-manager/virt-manager/connections" = {
         autoconnect = [ "qemu:///system" ];
         uris = [ "qemu:///system" ];
-      };
-    })
-    (lib.mkIf config.programs.tmux.enable {
-      "org/gnome/Console" = {
-        shell = [ (lib.getExe config.programs.tmux.package) ];
       };
     })
   ];

@@ -1,8 +1,8 @@
 { config, inputs, lib, modulesPath, pkgs, ... }: {
   imports = with inputs; [
-    ../../global/hosts
-    ../../optional/hosts/impermanence.nix
-    ../../optional/users/joao
+    ../../modules # == "default.nix";
+    ../../modules/impermanence.nix
+    ../../users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1

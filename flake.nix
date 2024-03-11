@@ -52,8 +52,8 @@
       imports = map (builtins.getAttr "flakeModule") [ devshell treefmt-nix ];
 
       flake = {
-        nixosConfigurations = import ./hosts { inherit inputs; };
-        homeConfigurations = import ./optional/home { inherit inputs; };
+        nixosConfigurations = import ./nixos/hosts { inherit inputs; };
+        homeConfigurations = import ./home-manager { inherit inputs; };
       };
 
       perSystem = { inputs', pkgs, ... }: {

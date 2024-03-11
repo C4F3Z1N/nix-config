@@ -5,6 +5,9 @@ let
 in {
   imports = [ ../. ];
 
+  home-manager.users."${username}" =
+    import (../../../home-manager + "/${username}");
+
   users.users."${username}" = {
     isNormalUser = true;
     description = displayName;
@@ -41,6 +44,4 @@ in {
       }))
     (lib.mkMerge)
   ];
-
-  home-manager.users."${username}" = import (../../home + "/${username}");
 }

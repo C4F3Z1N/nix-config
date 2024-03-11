@@ -1,6 +1,6 @@
 { config, inputs, lib, ... }:
 let
-  filePath = ../../hosts + "/${config.networking.hostName}/persistence.json";
+  filePath = ../hosts + "/${config.networking.hostName}/persistence.json";
   persistence = lib.importJSON filePath;
   mountPoints = lib.attrNames persistence;
 in {

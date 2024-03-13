@@ -75,6 +75,8 @@
     zfs.autoScrub.enable = true;
     zfs.trim.enable = true;
 
+    gnome.gnome-keyring.enable = lib.mkForce false;
+
     geoclue2.enableWifi = false;
 
     pipewire = {
@@ -103,6 +105,7 @@
       geary
       gedit
       gnome-clocks
+      gnome-contacts
       gnome-maps
       gnome-music
       gnome-photos
@@ -111,8 +114,10 @@
       gnome-weather
       hitori
       iagno
+      seahorse
       tali
       totem
+      yelp
     ];
 
     sessionVariables = { NIXOS_OZONE_WL = "1"; };

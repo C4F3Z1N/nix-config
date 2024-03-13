@@ -9,9 +9,8 @@
 
   dconf.settings = lib.mkMerge [
     (lib.mkIf osConfig.services.xserver.desktopManager.gnome.enable {
-      "org/gnome/Console" = lib.mkIf config.programs.tmux.enable {
-        shell = [ (lib.getExe config.programs.tmux.package) ];
-      };
+      "org/gnome/Console" =
+        lib.mkIf config.programs.tmux.enable { shell = [ "tmux" "attach" ]; };
       "org/gnome/desktop/datetime".automatic-timezone = true;
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/mutter".experimental-features =

@@ -76,14 +76,22 @@
 
           env = [
             {
+              name = "GNUPGHOME";
+              eval =
+                "$(printenv GNUPGHOME || find ~/.gnupg -maxdepth 0 || mktemp -d)";
+            }
+            {
+              name = "GPG_TTY";
+              eval = "$(tty)";
+            }
+            {
               name = "NIX_CONFIG";
               value =
                 "extra-experimental-features = flakes nix-command repl-flake";
             }
             {
-              name = "GNUPGHOME";
-              eval =
-                "$(printenv GNUPGHOME || find ~/.gnupg -maxdepth 0 || mktemp -d)";
+              name = "SSH_AUTH_SOCK";
+              eval = "$(gpgconf --list-dirs agent-ssh-socket)";
             }
           ];
         };

@@ -16,7 +16,6 @@
       "org/gnome/mutter".experimental-features =
         [ "scale-monitor-framebuffer" ];
       "org/gnome/settings-daemon/plugins/color".night-light-enabled = true;
-      "org/gnome/shell/weather".automatic-location = true;
       "org/gnome/system/location".enabled = osConfig.services.geoclue2.enable;
     })
     (lib.mkIf osConfig.virtualisation.libvirtd.enable {

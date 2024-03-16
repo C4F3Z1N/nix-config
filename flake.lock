@@ -3,7 +3,7 @@
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": ["nixpkgs-stable"]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1710156081,
@@ -21,7 +21,7 @@
     },
     "disko": {
       "inputs": {
-        "nixpkgs": ["nixpkgs-stable"]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1710169806,
@@ -54,7 +54,7 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": ["nixpkgs-stable"]
+        "nixpkgs-lib": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1709336216,
@@ -105,7 +105,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": ["nixpkgs-stable"]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1706981411,
@@ -183,7 +183,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": ["nixpkgs-stable"],
+        "nixpkgs": ["nixpkgs"],
         "nixpkgs-stable": ["nixpkgs-stable"]
       },
       "locked": {
@@ -217,7 +217,7 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": ["nixpkgs-stable"]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1710278050,

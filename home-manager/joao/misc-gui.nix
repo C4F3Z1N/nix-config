@@ -4,6 +4,7 @@
     slack
     virt-manager
     virt-viewer
+    vlc
     vscode
   ];
 

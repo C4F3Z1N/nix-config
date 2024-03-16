@@ -1,49 +1,44 @@
 { config, lib, osConfig, pkgs, ... }:
-let headless = builtins.elem "headless" osConfig.system.nixos.tags;
+let
+  inherit (osConfig.system.nixos) tags;
+  headless = builtins.elem "headless" tags;
 in {
   programs = {
     bash.enable = true;
+    carapace.enable = true;
 
     nushell = let
-      src = pkgs.srcOnly config.programs.nushell.package;
-      defaultFromSrc = type:
-        "${src}/crates/nu-utils/src/sample_config/default_${type}.nu";
-    in {
-      enable = true;
-      envFile.text = (builtins.readFile (defaultFromSrc "env"))
-        + (lib.optionalString (builtins.all (value: value) [
-          config.services.gpg-agent.enable
-          config.services.gpg-agent.enableSshSupport
-        ]) ''
+      source = pkgs.srcOnly config.programs.nushell.package;
+      gpgEnv = with config.services.gpg-agent;
+        lib.optionalString (enable && enableSshSupport) ''
           if not ("SSH_CONNECTION" in $env) {
             $env.GPG_TTY = (tty)
             $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
           }
-        '');
-      configFile.text = (builtins.readFile (defaultFromSrc "config"))
-        + (lib.optionalString config.programs.carapace.enable ''
-          def --env get-env [name] { $env | get $name }
-          def --env set-env [name, value] { load-env { $name: $value } }
-          def --env unset-env [name] { hide-env $name }
-
-          let carapace_completer = {|spans|
-            carapace $spans.0 nushell $spans | from json
-          }
-
-          mut current = (($env | default {} config).config | default {} completions)
-          $current.completions = ($current.completions | default {} external)
-          $current.completions.external = ($current.completions.external
-            | default true enable
-            | default $carapace_completer completer)
-          $current.show_banner = false
-
-          $env.config = $current
-        '');
-    };
-
-    carapace = {
+        '';
+      nixEnv = osConfig.environment.variables
+        // osConfig.environment.sessionVariables
+        // config.home.sessionVariables;
+    in {
       enable = true;
-      enableNushellIntegration = false; # it's not working well;
+      envFile.text = ''
+        source ${source}/crates/nu-utils/src/sample_config/default_env.nu
+        mut nixEnv = ('${builtins.toJSON nixEnv}' | from json)
+        use std assert
+        for i in ($nixEnv | transpose key value) {
+          if ('$' in $i.value) {
+            let eval = do { ^sh -c $"printf ($i.value)" } | complete
+            assert ($eval.exit_code == 0)
+            $nixEnv = ($nixEnv | update $i.key $eval.stdout)
+          }
+        }
+        load-env $nixEnv
+        ${gpgEnv}
+      '';
+      configFile.text = ''
+        source ${source}/crates/nu-utils/src/sample_config/default_config.nu
+        $env.config.show_banner = false
+      '';
     };
 
     starship = {

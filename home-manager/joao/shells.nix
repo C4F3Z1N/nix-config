@@ -16,29 +16,19 @@ in {
             $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
           }
         '';
-      nixEnv = osConfig.environment.variables
-        // osConfig.environment.sessionVariables
-        // config.home.sessionVariables;
     in {
       enable = true;
       envFile.text = ''
         source ${source}/crates/nu-utils/src/sample_config/default_env.nu
-        mut nixEnv = ('${builtins.toJSON nixEnv}' | from json)
-        use std assert
-        for i in ($nixEnv | transpose key value) {
-          if ('$' in $i.value) {
-            let eval = do { ^sh -c $"printf ($i.value)" } | complete
-            assert ($eval.exit_code == 0)
-            $nixEnv = ($nixEnv | update $i.key $eval.stdout)
-          }
-        }
-        load-env $nixEnv
         ${gpgEnv}
       '';
       configFile.text = ''
         source ${source}/crates/nu-utils/src/sample_config/default_config.nu
         $env.config.show_banner = false
       '';
+      environmentVariables = with config.home.sessionVariables; {
+        inherit EDITOR NIXPKGS_ALLOW_UNFREE;
+      };
     };
 
     starship = {

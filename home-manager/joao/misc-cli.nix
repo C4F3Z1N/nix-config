@@ -10,14 +10,23 @@
       enable = true;
       package = pkgs.gitMinimal;
       extraConfig = {
-        init = { defaultBranch = "main"; };
-        push = { autoSetupRemote = true; };
+        commit.gpgsign = true;
+        init.defaultBranch = "main";
+        push.autoSetupRemote = true;
       };
     };
 
     neovim = {
       enable = true;
       defaultEditor = true;
+    };
+  };
+
+  services.pueue = {
+    enable = true;
+    settings = {
+      shared.use_unix_socket = true;
+      client.restart_in_place = true;
     };
   };
 }

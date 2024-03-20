@@ -32,7 +32,7 @@
               "home-manager options" = {
                 urls = [{
                   template =
-                    "https://mipmip.github.io/home-manager-option-search/?query={searchTerms}";
+                    "https://home-manager-options.extranix.com/?query={searchTerms}";
                 }];
                 icon =
                   "${pkgs.gnome.adwaita-icon-theme}/share/icons/Adwaita/scalable/places/user-home.svg";

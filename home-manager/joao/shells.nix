@@ -73,12 +73,4 @@ in {
       # ];
     };
   };
-
-  services.pueue = {
-    enable = true;
-    settings = {
-      shared.use_unix_socket = true;
-      client.restart_in_place = true;
-    };
-  };
 }

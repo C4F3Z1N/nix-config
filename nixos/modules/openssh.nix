@@ -7,6 +7,12 @@ let
     (builtins.head)
     (lib.optionalString impermanence)
   ];
+  githubKnownHosts = lib.pipe inputs.github-metadata [
+    (lib.importJSON)
+    ({ ssh_keys, ... }: map (key: "github.com ${key}") ssh_keys)
+    (lib.concatLines)
+    (pkgs.writeText "known_hosts-github.com")
+  ];
 in {
   services.openssh = {
     startWhenNeeded = true;
@@ -23,11 +29,5 @@ in {
     };
   };
 
-  programs.ssh.knownHostsFiles = [
-    (lib.pipe inputs.github-metadata [
-      (lib.importJSON)
-      ({ ssh_keys, ... }: lib.concatLines ssh_keys)
-      (pkgs.writeText "known_hosts-github.com")
-    ])
-  ];
+  programs.ssh.knownHostsFiles = lib.mkAfter [ githubKnownHosts ];
 }

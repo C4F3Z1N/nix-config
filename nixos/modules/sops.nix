@@ -4,7 +4,7 @@
   sops.age = {
     sshKeyPaths = lib.pipe config.services.openssh.hostKeys [
       (builtins.filter ({ type, ... }: type == "ed25519"))
-      (builtins.getAttr "path")
+      (map (builtins.getAttr "path"))
     ];
     generateKey = false;
   };

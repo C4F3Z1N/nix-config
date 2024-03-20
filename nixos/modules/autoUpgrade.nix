@@ -1,11 +1,4 @@
-{ config, inputs, lib, pkgs, ... }:
-let
-  # set 'outPath' to match the registry alias if 'inputs.self' is included;
-  self = inputs.self // lib.optionalAttrs (lib.pipe config.nix.registry [
-    (lib.attrValues)
-    (builtins.any ({ flake, ... }: flake == inputs.self))
-  ]) { outPath = "flake:self"; };
-in {
+{ config, lib, pkgs, ... }: {
   system.autoUpgrade = {
     enable = self ? rev; # disable if dirty;
     dates = "hourly";
@@ -33,7 +26,7 @@ in {
           return ($output.stdout | from json)
         }
         let upstream = metadata "${config.system.autoUpgrade.flake}"
-        let local = metadata "${self}"
+        let local = metadata "flake:self"
         let latest = [ $upstream, $local ] | sort-by lastModified | last
         assert ($upstream == $latest)
       '';

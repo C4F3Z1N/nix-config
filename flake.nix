@@ -45,6 +45,11 @@
       url = "https://github.com/c4f3z1n.keys";
       flake = false;
     };
+
+    github-metadata = {
+      url = "https://api.github.com/meta";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ devshell, flake-parts, treefmt-nix, ... }:

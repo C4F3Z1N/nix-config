@@ -88,6 +88,18 @@
         "type": "github"
       }
     },
+    "github-metadata": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-fu6DLXNG8hxs6hCs16srCx4t+VrBEuV7D3TnO5ggH7s=",
+        "type": "file",
+        "url": "https://api.github.com/meta"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/meta"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1710622004,
@@ -171,6 +183,7 @@
         "disko": "disko",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
+        "github-metadata": "github-metadata",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",

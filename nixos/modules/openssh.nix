@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   inherit (config.system.nixos) tags;
   impermanence = builtins.elem "impermanence" tags;
@@ -9,6 +9,8 @@ let
   ];
 in {
   services.openssh = {
+    startWhenNeeded = true;
+
     hostKeys = map (type: {
       inherit type;
       path = "${prefix}/etc/ssh/ssh_host_${type}_key";
@@ -19,7 +21,13 @@ in {
       PermitRootLogin = "no";
       StreamLocalBindUnlink = "yes";
     };
-
-    startWhenNeeded = true;
   };
+
+  programs.ssh.knownHostsFiles = [
+    (lib.pipe inputs.github-metadata [
+      (lib.importJSON)
+      ({ ssh_keys, ... }: lib.concatLines ssh_keys)
+      (pkgs.writeText "known_hosts-github.com")
+    ])
+  ];
 }

@@ -10,11 +10,17 @@ in {
     enable = self ? rev; # disable if dirty;
     dates = "hourly";
     flags = [ "--print-build-logs" "--refresh" ];
-    flake = "github:c4f3z1n/nix-config";
+    flake = "git+ssh://git@github.com/c4f3z1n/nix-config.git";
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
-    path = with pkgs; [ nix nushell ];
+    environment.GIT_SSH_COMMAND = lib.pipe config.services.openssh.hostKeys [
+      # use hostKeys to connect git+ssh;
+      (map ({ path, ... }: "-i ${path}"))
+      (builtins.toString)
+      (keyArgs: "ssh -v ${keyArgs}")
+    ];
+    path = with pkgs; [ gitMinimal nix nushell openssh ];
     serviceConfig.ExecCondition = pkgs.writeTextFile {
       executable = true;
       name = "nixos-upgrade-condition.nu";

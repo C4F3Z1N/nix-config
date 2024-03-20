@@ -29,5 +29,11 @@ in {
     };
   };
 
-  programs.ssh.knownHostsFiles = lib.mkAfter [ githubKnownHosts ];
+  programs.ssh = {
+    extraConfig = lib.pipe config.services.openssh.hostKeys [
+      (map ({ path, ... }: "IdentityFile ${path}"))
+      (lib.concatLines)
+    ];
+    knownHostsFiles = lib.mkAfter [ githubKnownHosts ];
+  };
 }

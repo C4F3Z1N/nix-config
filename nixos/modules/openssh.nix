@@ -9,16 +9,10 @@ let
   ];
 in {
   services.openssh = {
-    hostKeys = [
-      {
-        path = "${prefix}/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "${prefix}/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-      }
-    ];
+    hostKeys = map (type: {
+      inherit type;
+      path = "${prefix}/etc/ssh/ssh_host_${type}_key";
+    }) [ "ecdsa" "ed25519" "rsa" ];
 
     settings = {
       PasswordAuthentication = false;

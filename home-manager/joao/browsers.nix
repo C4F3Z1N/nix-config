@@ -52,9 +52,23 @@
       enable = true;
       loadAutoconfig = true;
       settings = {
+        "colors.webpage.darkmode.enabled" = true;
+        "content.blocking.enabled" = true;
+        "content.blocking.method" = "both";
+        "content.geolocation" = false;
+        "content.tls.certificate_errors" = "ask-block-thirdparty";
+        "content.webgl" = false;
         "editor.command" = [ "xdg-open" "{file}" ];
-        "fonts.default_family" = "Ubuntu";
+        "fonts.default_family" =
+          [ "Noto Sans Mono" "DejaVu Sans Mono" "Liberation Mono" "Ubuntu" ];
+        "new_instance_open_target" = "tab-bg";
+        "qt.args" = [
+          "enable-accelerated-video-decode"
+          "enable-gpu-rasterization"
+          "ignore-gpu-blocklist"
+        ];
         "qt.highdpi" = true;
+        "statusbar.widgets" = [ "url" "progress" "scroll" ];
         "tabs.show" = "multiple";
       };
       extraConfig = ''

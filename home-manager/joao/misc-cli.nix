@@ -6,6 +6,8 @@
   ];
 
   programs = {
+    ripgrep.enable = true;
+
     git = {
       enable = true;
       package = pkgs.gitMinimal;
@@ -19,6 +21,12 @@
     neovim = {
       enable = true;
       defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+        editorconfig-nvim
+        # nvim-treesitter
+        plenary-nvim
+        telescope-nvim
+      ];
     };
   };
 

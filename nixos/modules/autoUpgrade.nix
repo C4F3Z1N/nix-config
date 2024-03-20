@@ -1,12 +1,12 @@
-{ config, lib, pkgs, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   system.autoUpgrade = {
-    enable = true;
+    enable = inputs.self ? rev;
     dates = "hourly";
     flags = [ "--print-build-logs" "--refresh" ];
     flake = "git+ssh://git@github.com/c4f3z1n/nix-config.git";
   };
 
-  systemd.services.nixos-upgrade = {
+  systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
     path = with pkgs; [ nix nushell ];
     serviceConfig.ExecCondition = pkgs.writeTextFile {
       executable = true;
@@ -22,7 +22,6 @@
         let upstream = metadata "${config.system.autoUpgrade.flake}"
         let local = metadata "flake:self"
         let latest = [ $upstream, $local ] | sort-by lastModified | last
-        assert ("revision" in $local) # fail if dirty;
         assert ($upstream == $latest)
       '';
     };

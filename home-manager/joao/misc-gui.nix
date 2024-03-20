@@ -17,6 +17,18 @@
       "org/gnome/mutter".experimental-features =
         [ "scale-monitor-framebuffer" ];
       "org/gnome/settings-daemon/plugins/color".night-light-enabled = true;
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/CopyQ/"
+        ];
+        home = [ "<Super>e" ];
+      };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/CopyQ" =
+        {
+          name = "CopyQ";
+          binding = "<Super>q";
+          command = "copyq toggle";
+        };
       "org/gnome/system/location".enabled = osConfig.services.geoclue2.enable;
     })
     (lib.mkIf osConfig.virtualisation.libvirtd.enable {

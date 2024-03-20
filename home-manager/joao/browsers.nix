@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }: {
+  home.sessionVariables.DEFAULT_BROWSER =
+    lib.getExe config.programs.firefox.package;
+
   programs = {
     chromium = {
       enable = true;
@@ -58,5 +61,16 @@
         c.tabs.padding = {"bottom": 10, "left": 10, "right": 10, "top": 10}
       '';
     };
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = lib.genAttrs [
+      "text/html"
+      "x-scheme-handler/about"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/unknown"
+    ] (_: "firefox.desktop");
   };
 }

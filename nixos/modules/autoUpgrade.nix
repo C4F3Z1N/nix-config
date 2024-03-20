@@ -14,8 +14,8 @@ in {
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
+    # use hostKeys to connect git+ssh;
     environment.GIT_SSH_COMMAND = lib.pipe config.services.openssh.hostKeys [
-      # use hostKeys to connect git+ssh;
       (map ({ path, ... }: "-i ${path}"))
       (builtins.toString)
       (keyArgs: "ssh -v ${keyArgs}")

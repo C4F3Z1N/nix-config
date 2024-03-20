@@ -54,7 +54,7 @@
 
   outputs = inputs@{ devshell, flake-parts, treefmt-nix, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = map (builtins.getAttr "flakeModule") [ devshell treefmt-nix ];
+      imports = [ devshell.flakeModule treefmt-nix.flakeModule ];
 
       flake = {
         inherit (import ./home-manager { inherit inputs; }) homeConfigurations;

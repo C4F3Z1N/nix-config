@@ -1,12 +1,11 @@
-{ config, inputs, ... }:
-let
-  isEd25519 = key: key.type == "ed25519";
-  ed25519HostKeys = builtins.filter isEd25519 config.services.openssh.hostKeys;
-in {
+{ config, inputs, lib, ... }: {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops.age = {
-    sshKeyPaths = map (builtins.getAttr "path") ed25519HostKeys;
+    sshKeyPaths = lib.pipe config.services.openssh.hostKeys [
+      (builtins.filter ({ type, ... }: type == "ed25519"))
+      (builtins.getAttr "path")
+    ];
     generateKey = false;
   };
 }

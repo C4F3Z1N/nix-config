@@ -26,9 +26,7 @@ in {
         source ${source}/crates/nu-utils/src/sample_config/default_config.nu
         $env.config.show_banner = false
       '';
-      environmentVariables = with config.home.sessionVariables; {
-        inherit EDITOR NIXPKGS_ALLOW_UNFREE;
-      };
+      environmentVariables = config.home.sessionVariables;
     };
 
     starship = {
@@ -55,6 +53,7 @@ in {
       escapeTime = 300;
       mouse = true;
       newSession = true;
+      secureSocket = false;
       terminal = "screen-256color";
 
       plugins = with pkgs.tmuxPlugins; [

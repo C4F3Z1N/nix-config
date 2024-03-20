@@ -10,9 +10,9 @@ in {
     inherit allowOther;
 
     directories = [
-      ".local/share/nix"
       ".mozilla"
       ".ssh"
+      ".tmux"
       ".vscode"
       "Desktop"
       "Development"
@@ -26,9 +26,10 @@ in {
       "copyq"
       "gcloud"
       "home-manager"
+      "qutebrowser"
       "Slack"
       "sops"
-    ];
+    ] ++ map (d: ".local/share/${d}") [ "direnv" "nix" "pueue" "qutebrowser" ];
 
     files = map (f: ".config/${f}") [
       "monitors.xml"

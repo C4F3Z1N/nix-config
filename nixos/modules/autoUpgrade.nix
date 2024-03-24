@@ -1,6 +1,5 @@
-{ config, inputs, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   system.autoUpgrade = {
-    enable = inputs.self ? rev;
     dates = "hourly";
     flags = [ "--print-build-logs" "--refresh" ];
     flake = "git+ssh://git@github.com/c4f3z1n/nix-config.git";
@@ -22,6 +21,7 @@
         let upstream = metadata "${config.system.autoUpgrade.flake}"
         let local = metadata "flake:self"
         let latest = [ $upstream, $local ] | sort-by lastModified | last
+        assert ("revision" in $local)
         assert ($upstream == $latest)
       '';
     };

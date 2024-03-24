@@ -138,5 +138,6 @@
     hostPlatform = lib.mkDefault "x86_64-linux";
   };
 
+  system.autoUpgrade.enable = true;
   system.stateVersion = "23.11";
 }

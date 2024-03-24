@@ -9,11 +9,14 @@
       options = "--delete-older-than 4d";
     };
 
-    registry = lib.pipe inputs [
-      # remove inputs that aren't flakes;
-      (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))
-      (lib.mapAttrs (_: flake: { inherit flake; }))
-    ];
+    registry = let
+      upstream = inputs.nix-registry.final;
+      local = lib.pipe inputs [
+        # remove inputs that aren't flakes;
+        (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))
+        (lib.mapAttrs (name: flake: { inherit flake; }))
+      ];
+    in local // upstream;
 
     settings = {
       auto-optimise-store = true;

@@ -1,5 +1,7 @@
 {
   inputs = {
+    nix-registry.url = "github:c4f3z1n/nix-registry";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 

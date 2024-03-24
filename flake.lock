@@ -146,6 +146,21 @@
         "url": "https://github.com/c4f3z1n.keys"
       }
     },
+    "nix-registry": {
+      "locked": {
+        "lastModified": 1711281618,
+        "narHash": "sha256-pJWGWFyB8N9/th11IP0CjxKqBS4+YE4xIvg7XDbk/Xo=",
+        "owner": "c4f3z1n",
+        "repo": "nix-registry",
+        "rev": "b5b77ca83241867ae0dc6608e46c70ce12df1aa9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "c4f3z1n",
+        "repo": "nix-registry",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1711274671,
@@ -187,6 +202,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "my-keys": "my-keys",
+        "nix-registry": "nix-registry",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix",

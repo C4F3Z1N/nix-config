@@ -161,7 +161,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable": {
+    "nixpkgs": {
       "locked": {
         "lastModified": 1710838473,
         "narHash": "sha256-RLvwdQSENKOaLdKhNie8XqHmTXzNm00/M/THj6zplQo=",
@@ -188,8 +188,7 @@
         "impermanence": "impermanence",
         "my-keys": "my-keys",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": ["nixpkgs-stable"],
-        "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix",
         "treefmt-nix": "treefmt-nix"
       }
@@ -197,7 +196,7 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": ["nixpkgs"],
-        "nixpkgs-stable": ["nixpkgs-stable"]
+        "nixpkgs-stable": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1710644594,

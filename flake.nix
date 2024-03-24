@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.follows = "nixpkgs-stable";
 
-    hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 

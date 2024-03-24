@@ -100,21 +100,6 @@
         "url": "https://api.github.com/meta"
       }
     },
-    "hardware": {
-      "locked": {
-        "lastModified": 1710783728,
-        "narHash": "sha256-eIsfu3c9JUBgm3cURSKTXLEI9Dlk1azo+MWKZVqrmkc=",
-        "owner": "nixos",
-        "repo": "nixos-hardware",
-        "rev": "1e679b9a9970780cd5d4dfe755a74a8f96d33388",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": ["nixpkgs"]
@@ -161,6 +146,21 @@
         "url": "https://github.com/c4f3z1n.keys"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1711274671,
+        "narHash": "sha256-19KQXya5VERUXOdeEJJN+zOqtvuE6MV3qTk9Gr4J9Uo=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "7559df1e4af972d5f1de87975b5ef6a8d7559db2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1710838473,
@@ -184,10 +184,10 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "github-metadata": "github-metadata",
-        "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "my-keys": "my-keys",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": ["nixpkgs-stable"],
         "nixpkgs-stable": "nixpkgs-stable",
         "sops-nix": "sops-nix",

@@ -5,7 +5,7 @@
     ../../users/joao
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
-    hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
+    nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
   ];
 
   boot = {

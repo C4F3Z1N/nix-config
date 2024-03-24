@@ -2,41 +2,60 @@
   inputs = {
     nix-registry.url = "github:c4f3z1n/nix-registry";
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixpkgs = {
+      id = "nixpkgs";
+      type = "indirect";
+    };
+
+    nixos-hardware = {
+      id = "nixos-hardware";
+      type = "indirect";
+    };
 
     devshell = {
-      url = "github:numtide/devshell";
+      id = "devshell";
+      type = "indirect";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
-      url = "github:nix-community/disko";
+      id = "disko";
+      type = "indirect";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat = {
+      id = "flake-compat";
+      type = "indirect";
+    };
 
     flake-parts = {
-      url = "github:hercules-ci/flake-parts";
+      id = "flake-parts";
+      type = "indirect";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      id = "home-manager";
+      type = "indirect";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      id = "impermanence";
+      type = "indirect";
+    };
 
     sops-nix = {
-      url = "github:mic92/sops-nix";
+      id = "sops-nix";
+      type = "indirect";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
 
     treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
+      id = "treefmt-nix";
+      type = "indirect";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

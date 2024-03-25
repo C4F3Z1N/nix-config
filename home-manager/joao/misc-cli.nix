@@ -3,6 +3,7 @@
     (google-cloud-sdk.withExtraComponents
       [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     (inputs.home-manager.packages."${system}".home-manager)
+    rclone
   ];
 
   programs = {

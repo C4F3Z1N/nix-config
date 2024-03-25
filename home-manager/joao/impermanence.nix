@@ -27,6 +27,7 @@ in {
       "gcloud"
       "home-manager"
       "qutebrowser"
+      "rclone"
       "Slack"
       "sops"
     ] ++ map (d: ".local/share/${d}") [ "direnv" "nix" "pueue" "qutebrowser" ];

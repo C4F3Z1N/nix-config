@@ -3,7 +3,9 @@
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1711099426,
@@ -20,7 +22,9 @@
     },
     "disko": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1711261295,
@@ -51,7 +55,9 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": ["nixpkgs"]
+        "nixpkgs-lib": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1709336216,
@@ -87,7 +93,7 @@
     "github-metadata": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-fu6DLXNG8hxs6hCs16srCx4t+VrBEuV7D3TnO5ggH7s=",
+        "narHash": "sha256-nKRd7m47PmLJkdS4naFgBo+YfbG/MPVcnpeCd5L7KA4=",
         "type": "file",
         "url": "https://api.github.com/meta"
       },
@@ -98,7 +104,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1710888565,
@@ -201,8 +209,12 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"],
-        "nixpkgs-stable": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1711249319,
@@ -234,7 +246,9 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1710781103,

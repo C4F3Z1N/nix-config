@@ -17,7 +17,7 @@ jobs:
       - name: Update flake.lock
         uses: determinatesystems/update-flake-lock@v21
         with:
-          nix-options: --flake-registry <(nix eval github:c4f3z1n/nix-registry#rendered --json)
+          nix-options: "--flake-registry <(nix eval github:c4f3z1n/nix-registry#rendered --json)"
           pr-labels: dependencies
           pr-title: Update flake.lock
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}

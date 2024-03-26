@@ -1,7 +1,7 @@
 { inputs, lib, ... }: {
   nix = {
     channel.enable = false;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = [ "nixpkgs=flake:nixpkgs" ];
 
     gc = {
       automatic = true;
@@ -10,7 +10,14 @@
     };
 
     registry = let
-      upstream = inputs.nix-registry.final;
+      upstream = lib.pipe inputs.nix-registry [
+        (builtins.getAttr "flakes")
+        (map (value@{ from, ... }: {
+          inherit value;
+          name = from.id;
+        }))
+        (builtins.listToAttrs)
+      ];
       local = lib.pipe inputs [
         # remove inputs that aren't flakes;
         (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))

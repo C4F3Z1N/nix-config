@@ -1,0 +1,23 @@
+name: Update Flake inputs
+on:
+  schedule:
+    - cron: "0 0 * * 0" # runs weekly on Sunday at 00:00
+  workflow_dispatch: # allows manual triggering
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+
+      - name: Update flake.lock
+        uses: determinatesystems/update-flake-lock@v21
+        with:
+          nix-options: --flake-registry <(nix eval github:c4f3z1n/nix-registry#rendered --json)
+          pr-labels: dependencies
+          pr-title: Update flake.lock
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}

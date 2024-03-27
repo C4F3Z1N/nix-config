@@ -8,16 +8,20 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: cachix/install-nix-action@v23
-
-      - name: Update flake.lock
-        uses: determinatesystems/update-flake-lock@v21
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v23
         with:
-          nix-options: --flake-registry https://github.com/c4f3z1n/nix-registry/raw/main/registry.json
-          pr-labels: dependencies
-          pr-title: Update flake.lock
-          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+          extra_nix_config: |
+            experimental-features = flakes nix-command
+            flake-registry = https://github.com/c4f3z1n/nix-registry/raw/main/registry.json
+            nix-path = nixpkgs=flake:nixpkgs
+      - run: nix flake update
+      - run: nix fmt
+
+      # - id: update
+      #   uses: determinatesystems/update-flake-lock@v21
+      #   with:
+      #     nix-options: --flake-registry https://github.com/c4f3z1n/nix-registry/raw/main/registry.json
+      #     pr-labels: dependencies
+      #     pr-title: Update flake.lock
+      #     token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}

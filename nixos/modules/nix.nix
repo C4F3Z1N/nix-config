@@ -1,4 +1,4 @@
-{ inputs, lib, ... }: {
+{ config, inputs, lib, ... }: {
   nix = {
     channel.enable = false;
     nixPath = [ "nixpkgs=flake:nixpkgs" ];
@@ -19,7 +19,7 @@
         (builtins.listToAttrs)
       ];
       local = lib.pipe inputs [
-        # remove inputs that aren't flakes;
+        # remove entries that aren't flakes;
         (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))
         (lib.mapAttrs (name: flake: { inherit flake; }))
       ];
@@ -29,6 +29,7 @@
       auto-optimise-store = true;
       experimental-features = [ "flakes" "nix-command" "repl-flake" ];
       flake-registry = null;
+      nix-path = config.nix.nixPath;
 
       substituters =
         [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];

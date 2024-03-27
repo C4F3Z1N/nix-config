@@ -27,7 +27,7 @@ jobs:
       - uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           signoff: false
           branch: flake-update
           delete-branch: true

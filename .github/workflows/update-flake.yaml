@@ -15,13 +15,22 @@ jobs:
             experimental-features = flakes nix-command
             flake-registry = https://github.com/c4f3z1n/nix-registry/raw/main/registry.json
             nix-path = nixpkgs=flake:nixpkgs
-      - run: nix flake update
-      - run: nix fmt
-
-      # - id: update
-      #   uses: determinatesystems/update-flake-lock@v21
-      #   with:
-      #     nix-options: --flake-registry https://github.com/c4f3z1n/nix-registry/raw/main/registry.json
-      #     pr-labels: dependencies
-      #     pr-title: Update flake.lock
-      #     token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+      - run: |
+          nix flake update
+          nix fmt
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add flake.lock
+          git restore .
+          git commit -m "Updated flake.lock"
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: flake-update
+          delete-branch: true
+          title: Updated flake.lock
+          assignees: ${{ github.actor }}
+          draft: false

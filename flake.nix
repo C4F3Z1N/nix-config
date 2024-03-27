@@ -2,60 +2,39 @@
   inputs = {
     nix-registry.url = "github:c4f3z1n/nix-registry";
 
-    nixpkgs = {
-      id = "nixpkgs";
-      type = "indirect";
-    };
-
-    nixos-hardware = {
-      id = "nixos-hardware";
-      type = "indirect";
-    };
+    flake-compat.url = "flake:flake-compat";
+    impermanence.url = "flake:impermanence";
+    nixos-hardware.url = "flake:nixos-hardware";
+    nixpkgs.url = "flake:nixpkgs";
 
     devshell = {
-      id = "devshell";
-      type = "indirect";
+      url = "flake:devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
-      id = "disko";
-      type = "indirect";
+      url = "flake:disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-compat = {
-      id = "flake-compat";
-      type = "indirect";
-    };
-
     flake-parts = {
-      id = "flake-parts";
-      type = "indirect";
+      url = "flake:flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     home-manager = {
-      id = "home-manager";
-      type = "indirect";
+      url = "flake:home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      id = "impermanence";
-      type = "indirect";
-    };
-
     sops-nix = {
-      id = "sops-nix";
-      type = "indirect";
+      url = "flake:sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
 
     treefmt-nix = {
-      id = "treefmt-nix";
-      type = "indirect";
+      url = "flake:treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

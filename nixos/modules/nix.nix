@@ -1,4 +1,4 @@
-{ config, inputs, lib, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   nix = {
     channel.enable = false;
     nixPath = [ "nixpkgs=flake:nixpkgs" ];
@@ -10,7 +10,9 @@
     };
 
     registry = let
-      upstream = lib.pipe inputs.nix-registry [
+      custom = import inputs.nix-registry { inherit pkgs; };
+      upstream = lib.pipe custom [
+        (lib.importJSON)
         (builtins.getAttr "flakes")
         (map (value@{ from, ... }: {
           inherit value;
@@ -21,7 +23,7 @@
       local = lib.pipe inputs [
         # remove entries that aren't flakes;
         (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))
-        (lib.mapAttrs (name: flake: { inherit flake; }))
+        (lib.mapAttrs (_: flake: { inherit flake; }))
       ];
     in local // upstream;
 

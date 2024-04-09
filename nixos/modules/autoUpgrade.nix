@@ -18,11 +18,13 @@
           assert ($output.exit_code == 0) $output.stderr
           return ($output.stdout | from json)
         }
-        let upstream = metadata "${config.system.autoUpgrade.flake}"
-        let local = metadata "flake:self"
-        let latest = [ $upstream, $local ] | sort-by lastModified | last
-        assert ("revision" in $local)
-        assert ($upstream == $latest)
+        def main []: nothing -> nothing {
+          let upstream = metadata "${config.system.autoUpgrade.flake}"
+          let local = metadata "flake:self"
+          let latest = [ $upstream, $local ] | sort-by lastModified | last
+          assert ("revision" in $local)
+          assert ($upstream == $latest)
+        }
       '';
     };
   };

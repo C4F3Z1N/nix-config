@@ -1,64 +1,58 @@
 {
+  description = "My NixOS and home-manager configurations";
+
   inputs = {
+    # flake inputs are indirectly referenced,
+    # so they're fetched from the local registry;
+
+    # non-flake;
+    github-metadata.url = "https://api.github.com/meta";
+    github-metadata.flake = false;
+    my-keys.url = "https://github.com/c4f3z1n.keys";
+    my-keys.flake = false;
     nix-registry.url = "github:c4f3z1n/nix-registry";
+    nix-registry.flake = false; # to avoid rendering its inputs;
 
-    flake-compat.url = "flake:flake-compat";
-    impermanence.url = "flake:impermanence";
-    nixos-hardware.url = "flake:nixos-hardware";
-    nixpkgs.url = "flake:nixpkgs";
-
-    devshell = {
-      url = "flake:devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    disko = {
-      url = "flake:disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-parts = {
-      url = "flake:flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "flake:home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops-nix = {
-      url = "flake:sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "flake:treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    my-keys = {
-      url = "https://github.com/c4f3z1n.keys";
-      flake = false;
-    };
-
-    github-metadata = {
-      url = "https://api.github.com/meta";
-      flake = false;
-    };
+    # deduplication;
+    devshell.inputs.flake-utils.follows = "flake-utils";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    flake-utils.inputs.systems.follows = "systems";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ devshell, flake-parts, treefmt-nix, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ devshell.flakeModule treefmt-nix.flakeModule ];
+  outputs = inputs @ {
+    devshell,
+    disko,
+    flake-compat,
+    flake-parts,
+    flake-utils,
+    home-manager,
+    impermanence,
+    nixos-hardware,
+    nixpkgs,
+    sops-nix,
+    systems,
+    treefmt-nix,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [devshell.flakeModule treefmt-nix.flakeModule];
 
       flake = {
-        inherit (import ./home-manager { inherit inputs; }) homeConfigurations;
-        inherit (import ./nixos/hosts { inherit inputs; }) nixosConfigurations;
+        inherit (import ./home-manager {inherit inputs;}) homeConfigurations;
+        inherit (import ./nixos/hosts {inherit inputs;}) nixosConfigurations;
       };
 
-      perSystem = { inputs', pkgs, ... }: {
+      perSystem = {
+        inputs',
+        pkgs,
+        ...
+      }: {
         devshells.default = {
           packages = with (pkgs // inputs'.disko.packages); [
             age
@@ -79,8 +73,7 @@
           env = [
             {
               name = "GNUPGHOME";
-              eval =
-                "$(printenv GNUPGHOME || find ~/.gnupg -maxdepth 0 || mktemp -d)";
+              eval = "$(printenv GNUPGHOME || find ~/.gnupg -maxdepth 0 || mktemp -d)";
             }
             {
               name = "GPG_TTY";
@@ -88,8 +81,7 @@
             }
             {
               name = "NIX_CONFIG";
-              value =
-                "extra-experimental-features = flakes nix-command repl-flake";
+              value = "extra-experimental-features = flakes nix-command repl-flake";
             }
             {
               name = "SSH_AUTH_SOCK";
@@ -99,13 +91,18 @@
         };
 
         treefmt.config = {
-          projectRootFile = "flake.nix";
+          # programs.alejandra.enable = true;
           programs.nixfmt.enable = true;
           programs.prettier.enable = true;
-          settings.formatter.prettier.includes = [ "*.lock" ];
+          projectRootFile = "flake.nix";
+          settings.formatter = {
+            prettier.includes = ["*.lock"];
+            nixfmt.excludes = ["flake.nix"];
+            # TODO: use alejandra for flake.nix;
+          };
         };
       };
 
-      systems = [ "aarch64-linux" "x86_64-linux" ];
+      systems = import systems;
     };
 }

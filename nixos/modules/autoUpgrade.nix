@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }: {
   system.autoUpgrade = {
     dates = "hourly";
-    flags = [ "--print-build-logs" "--refresh" ];
+    flags = [ "--print-build-logs" ];
     flake = "git+ssh://git@github.com/c4f3z1n/nix-config.git";
   };
 

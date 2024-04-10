@@ -9,23 +9,21 @@
       options = "--delete-older-than 4d";
     };
 
-    registry = let
-      custom = import inputs.nix-registry { inherit pkgs; };
-      upstream = lib.pipe custom [
-        (lib.importJSON)
-        (builtins.getAttr "flakes")
-        (map (value@{ from, ... }: {
-          inherit value;
-          name = from.id;
-        }))
-        (builtins.listToAttrs)
-      ];
-      local = lib.pipe inputs [
-        # remove entries that aren't flakes;
-        (lib.filterAttrs (_: { _type ? null, ... }: _type == "flake"))
-        (lib.mapAttrs (_: flake: { inherit flake; }))
-      ];
-    in local // upstream;
+    registry = with inputs;
+      let
+        upstream = lib.importJSON (import nix-registry { inherit pkgs; });
+        local = lib.importJSON (import nix-registry {
+          inherit pkgs;
+          lockFile = "${self}/flake.lock";
+        });
+        consolidated = lib.pipe (local.flakes ++ upstream.flakes) [
+          (map (value@{ from, ... }: {
+            inherit value;
+            name = from.id;
+          }))
+          (builtins.listToAttrs)
+        ];
+      in consolidated // { self.flake = self; };
 
     settings = {
       auto-optimise-store = true;

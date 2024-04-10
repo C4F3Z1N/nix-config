@@ -141,11 +141,11 @@
     "nix-registry": {
       "flake": false,
       "locked": {
-        "lastModified": 1712672817,
-        "narHash": "sha256-/8lj/ru0P2/NU6KrPvipJifreLHhuo2M9utSMyo289E=",
+        "lastModified": 1712758826,
+        "narHash": "sha256-mKsIZQbwtNDkZ+xwxocyOD0L+B7twJnCuVioQxWee48=",
         "owner": "c4f3z1n",
         "repo": "nix-registry",
-        "rev": "e52f5075e4e9356c2852a1411e2d6669b713fbaf",
+        "rev": "ce9ba2af3d633522a64a527232d1fe24ef738302",
         "type": "github"
       },
       "original": {

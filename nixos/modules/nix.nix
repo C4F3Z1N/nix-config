@@ -16,7 +16,7 @@
           inherit pkgs;
           lockFile = "${self}/flake.lock";
         });
-        consolidated = lib.pipe (local.flakes ++ upstream.flakes) [
+        consolidated = lib.pipe (upstream.flakes ++ local.flakes) [
           (map (value@{ from, ... }: {
             inherit value;
             name = from.id;

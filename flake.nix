@@ -10,8 +10,6 @@
     github-metadata.flake = false;
     my-keys.url = "https://github.com/c4f3z1n.keys";
     my-keys.flake = false;
-    nix-registry.url = "github:c4f3z1n/nix-registry";
-    nix-registry.flake = false; # to avoid rendering its inputs;
 
     # deduplication;
     devshell.inputs.flake-utils.follows = "flake-utils";
@@ -23,6 +21,7 @@
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nix-registry.flake = false; # avoid recursive inputs rendering;
   };
 
   outputs = inputs @ {

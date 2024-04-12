@@ -9,26 +9,12 @@
       options = "--delete-older-than 4d";
     };
 
-    registry = with inputs;
-      let
-        upstream = lib.importJSON (import nix-registry { inherit pkgs; });
-        local = lib.importJSON (import nix-registry {
-          inherit pkgs;
-          lockFile = "${self}/flake.lock";
-        });
-        consolidated = lib.pipe (upstream.flakes ++ local.flakes) [
-          (map (value@{ from, ... }: {
-            inherit value;
-            name = from.id;
-          }))
-          (builtins.listToAttrs)
-        ];
-      in consolidated // { self.flake = self; };
+    registry = { self.flake = inputs.self; };
 
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "flakes" "nix-command" "repl-flake" ];
-      flake-registry = null;
+      flake-registry = import inputs.nix-registry { inherit pkgs; };
       nix-path = config.nix.nixPath;
 
       substituters = [ "https://nix-community.cachix.org" ];

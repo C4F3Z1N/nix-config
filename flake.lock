@@ -195,9 +195,26 @@
         "nix-registry": "nix-registry",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "secrets": "secrets",
         "sops-nix": "sops-nix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1713265956,
+        "narHash": "sha256-ddDijdyyKyEZleq7uRUtKbB0WZahrHe4KNLhjMxYVBE=",
+        "ref": "refs/heads/main",
+        "rev": "1f98e5cf5e912740ba75bb07bd779a0073f179bc",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/c4f3z1n/secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/c4f3z1n/secrets.git"
       }
     },
     "sops-nix": {

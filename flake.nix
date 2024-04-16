@@ -2,8 +2,10 @@
   description = "My NixOS and home-manager configurations";
 
   inputs = {
-    # flake inputs are indirectly referenced,
+    # most flake inputs are indirectly referenced,
     # so they're fetched from the local registry;
+
+    secrets.url = "git+ssh://git@github.com/c4f3z1n/secrets.git";
 
     # non-flake;
     github-metadata.url = "https://api.github.com/meta";
@@ -21,7 +23,10 @@
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-    nix-registry.flake = false; # avoid recursive inputs rendering;
+
+    # avoid recursive inputs rendering;
+    nix-registry.flake = false;
+    secrets.flake = false;
   };
 
   outputs = inputs @ {

@@ -130,7 +130,8 @@
     lxd.recommendedSysctlSettings = true;
   };
 
-  sops.defaultSopsFile = ./secrets.json;
+  sops.defaultSopsFile =
+    "${inputs.secrets}/sops/hosts/${config.networking.hostName}.json";
   sops.secrets.luks_password.neededForUsers = true;
 
   nixpkgs = {

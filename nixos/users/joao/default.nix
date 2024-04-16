@@ -23,7 +23,8 @@ in {
     shell = pkgs.nushell;
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
     openssh.authorizedKeys.keys =
-      lib.splitString "\n" (builtins.readFile inputs.my-keys);
+      with lib.importJSON "${inputs.secrets}/public.json";
+      users."${username}".ssh;
   };
 
   services.pcscd.enable = true;
@@ -34,7 +35,7 @@ in {
   sops.secrets = let
     format = "json";
     neededForUsers = true;
-    sopsFile = ./secrets.json;
+    sopsFile = "${inputs.secrets}/sops/users/${username}.json";
   in lib.pipe sopsFile [
     (lib.importJSON)
     (lib.attrNames)

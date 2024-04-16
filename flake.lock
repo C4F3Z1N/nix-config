@@ -189,7 +189,12 @@
       }
     },
     "secrets": {
-      "flake": false,
+      "inputs": {
+        "flake-parts": ["flake-parts"],
+        "nixpkgs": ["nixpkgs"],
+        "systems": ["systems"],
+        "treefmt-nix": ["treefmt-nix"]
+      },
       "locked": {
         "lastModified": 1713265956,
         "narHash": "sha256-ddDijdyyKyEZleq7uRUtKbB0WZahrHe4KNLhjMxYVBE=",
@@ -200,8 +205,8 @@
         "url": "ssh://git@github.com/c4f3z1n/secrets.git"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/c4f3z1n/secrets.git"
+        "id": "secrets",
+        "type": "indirect"
       }
     },
     "sops-nix": {

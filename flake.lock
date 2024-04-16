@@ -23,11 +23,11 @@
         "nixpkgs": ["nixpkgs"]
       },
       "locked": {
-        "lastModified": 1712612224,
-        "narHash": "sha256-Tv4C8OSPVmm4LbpJGLFSODyvJy6DqrisEGPCQdNVOeY=",
+        "lastModified": 1713152224,
+        "narHash": "sha256-k1aV06cotPwWO3FW+ho+dEoGjxNM303+UmhiG2o6XPs=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "79eab0e82cb126bf4ac170f44af82479f0895ab5",
+        "rev": "bb5ba68ebb73b5ca7996b64e1457fe885891e78e",
         "type": "github"
       },
       "original": {
@@ -86,7 +86,7 @@
     "github-metadata": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-y/TFLXK+jbz4llzUAIhND9U5RH9NFg4m+i7uEpr1c78=",
+        "narHash": "sha256-38kWQ+ASbMqLeAggHQGJlBmn9eTLrB/SokjaA/ZediY=",
         "type": "file",
         "url": "https://api.github.com/meta"
       },
@@ -126,18 +126,6 @@
         "type": "indirect"
       }
     },
-    "my-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-nkBfuSZwT9vpj2Ir45Qd2J/kdoh9yDaHxQkZWoGJ/vc=",
-        "type": "file",
-        "url": "https://github.com/c4f3z1n.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/c4f3z1n.keys"
-      }
-    },
     "nix-registry": {
       "flake": false,
       "locked": {
@@ -155,11 +143,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1712758943,
-        "narHash": "sha256-yysTZWirpMhhscq16Tih+OrMbpig5eoq1uaZqf+z/R4=",
+        "lastModified": 1712909959,
+        "narHash": "sha256-7/5ubuwdEbQ7Z+Vqd4u0mM5L2VMNDsBh54visp27CtQ=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "79a20e2ac0dddeaf6a482a547181361f061f7955",
+        "rev": "f58b25254be441cd2a9b4b444ed83f1e51244f1f",
         "type": "github"
       },
       "original": {
@@ -191,7 +179,6 @@
         "github-metadata": "github-metadata",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
-        "my-keys": "my-keys",
         "nix-registry": "nix-registry",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
@@ -223,11 +210,11 @@
         "nixpkgs-stable": ["nixpkgs"]
       },
       "locked": {
-        "lastModified": 1712617241,
-        "narHash": "sha256-a4hbls4vlLRMciv62YrYT/Xs/3Cubce8WFHPUDWwzf8=",
+        "lastModified": 1713066950,
+        "narHash": "sha256-ZaefFyvt5369XdjzSw43NhfbPM9MN5b9YXhzx4lFIRc=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "538c114cfdf1f0458f507087b1dcf018ce1c0c4c",
+        "rev": "226062b47fe0e2130ba3ee9f4f1c880dc815cf87",
         "type": "github"
       },
       "original": {

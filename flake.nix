@@ -10,8 +10,6 @@
     # non-flake;
     github-metadata.url = "https://api.github.com/meta";
     github-metadata.flake = false;
-    my-keys.url = "https://github.com/c4f3z1n.keys";
-    my-keys.flake = false;
 
     # deduplication;
     devshell.inputs.flake-utils.follows = "flake-utils";

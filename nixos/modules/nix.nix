@@ -9,7 +9,15 @@
       options = "--delete-older-than 4d";
     };
 
-    registry = { self.flake = inputs.self; };
+    registry = with lib.importJSON "${inputs.self}/flake.lock"; {
+      secrets.to = builtins.removeAttrs nodes.secrets.locked [
+        "lastModified"
+        "narHash"
+        "rev"
+        "revCount"
+      ];
+      self.flake = inputs.self;
+    };
 
     settings = {
       auto-optimise-store = true;

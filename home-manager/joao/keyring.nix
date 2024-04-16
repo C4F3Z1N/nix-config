@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   home.packages = with pkgs; [
     age
     monkeysphere
@@ -11,22 +11,18 @@
   programs = {
     gpg = {
       enable = true;
-      publicKeys = [{
-        source = builtins.fetchurl {
-          url =
-            "https://keys.openpgp.org/vks/v1/by-fingerprint/724A264781B08135FE89E9FDBE4D78290B7222EA";
-          sha256 =
-            "sha256:07zakjijajnczrsrz0bihl1ay0gcj8z5i4sm18s8bjr9mmip33k6";
-        };
-        trust = 5;
-      }];
+      publicKeys = with lib.importJSON "${inputs.secrets}/public.json";
+        map (text: {
+          inherit text;
+          trust = 5;
+        }) users."${config.home.username}".gpg;
     };
 
     ssh = {
       enable = true;
       controlMaster = "auto";
       controlPath = "${config.xdg.cacheHome}/ssh-%r@%h:%p.sock";
-      controlPersist = "1h";
+      controlPersist = "15m";
     };
   };
 

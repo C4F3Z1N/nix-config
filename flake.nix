@@ -16,16 +16,13 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.inputs.systems.follows = "systems";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    secrets.inputs.flake-parts.follows = "flake-parts";
-    secrets.inputs.nixpkgs.follows = "nixpkgs";
-    secrets.inputs.systems.follows = "systems";
-    secrets.inputs.treefmt-nix.follows = "treefmt-nix";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # avoid recursive inputs rendering;
     nix-registry.flake = false;
+    secrets.flake = false;
   };
 
   outputs = inputs @ {

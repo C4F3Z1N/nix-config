@@ -189,12 +189,7 @@
       }
     },
     "secrets": {
-      "inputs": {
-        "flake-parts": ["flake-parts"],
-        "nixpkgs": ["nixpkgs"],
-        "systems": ["systems"],
-        "treefmt-nix": ["treefmt-nix"]
-      },
+      "flake": false,
       "locked": {
         "lastModified": 1713265956,
         "narHash": "sha256-ddDijdyyKyEZleq7uRUtKbB0WZahrHe4KNLhjMxYVBE=",

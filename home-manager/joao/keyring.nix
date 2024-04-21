@@ -1,7 +1,10 @@
 { config, inputs, lib, pkgs, ... }: {
   home.packages = with pkgs; [
     age
+    john
     monkeysphere
+    openssl
+    pgpdump
     sops
     ssh-to-age
     ssh-to-pgp

@@ -34,6 +34,7 @@
       enable = true;
       enableSshSupport = true;
       enableScDaemon = true;
+      pinentryPackage = pkgs.pinentry;
     };
 
     ssh-agent.enable = false;

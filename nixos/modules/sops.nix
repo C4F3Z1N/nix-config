@@ -1,4 +1,13 @@
-{ config, inputs, lib, ... }: {
+{ config, inputs, lib, ... }:
+let
+  inherit (config.system.nixos) tags;
+  impermanence = builtins.elem "impermanence" tags;
+  prefix = lib.optionalString impermanence (lib.pipe config.environment [
+    ({ persistence ? { "" = null; }, ... }: persistence)
+    (lib.attrNames)
+    (builtins.head)
+  ]);
+in {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops.age = {

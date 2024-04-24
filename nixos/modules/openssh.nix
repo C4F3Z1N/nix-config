@@ -2,11 +2,11 @@
 let
   inherit (config.system.nixos) tags;
   impermanence = builtins.elem "impermanence" tags;
-  prefix = lib.pipe config.environment.persistence [
+  prefix = lib.optionalString impermanence (lib.pipe config.environment [
+    ({ persistence ? { "" = null; }, ... }: persistence)
     (lib.attrNames)
     (builtins.head)
-    (lib.optionalString impermanence)
-  ];
+  ]);
   githubKnownHosts = lib.pipe inputs.github-metadata [
     (lib.importJSON)
     ({ ssh_keys, ... }: map (key: "github.com ${key}") ssh_keys)

@@ -40,4 +40,8 @@
   ];
 
   services.copyq.enable = true;
+  services.gpg-agent =
+    lib.mkIf osConfig.services.xserver.desktopManager.gnome.enable {
+      pinentryPackage = pkgs.pinentry-gnome;
+    };
 }

@@ -5,10 +5,6 @@
     # most flake inputs are indirectly referenced,
     # so they're fetched from the local registry;
 
-    # non-flake;
-    github-metadata.url = "https://api.github.com/meta";
-    github-metadata.flake = false;
-
     # deduplication;
     devshell.inputs.flake-utils.follows = "flake-utils";
     devshell.inputs.nixpkgs.follows = "nixpkgs";

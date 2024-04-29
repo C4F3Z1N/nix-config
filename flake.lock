@@ -83,18 +83,6 @@
         "type": "indirect"
       }
     },
-    "github-metadata": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-j7i6xesjYgpypTaLtLXkYhNOi4BprTq8gE9zV/K0PxQ=",
-        "type": "file",
-        "url": "https://api.github.com/meta"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://api.github.com/meta"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": ["nixpkgs"]
@@ -176,7 +164,6 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
-        "github-metadata": "github-metadata",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-registry": "nix-registry",

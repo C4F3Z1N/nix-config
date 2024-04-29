@@ -2,6 +2,12 @@
 let
   username = builtins.baseNameOf ./.;
   displayName = "João";
+  sshPubKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
+    (lib.importJSON)
+    (lib.getAttrFromPath [ "users" username ])
+    (lib.filterAttrs (type: _: builtins.elem type [ "ecdsa" "ed25519" "rsa" ]))
+    (lib.attrValues)
+  ];
 in {
   imports = [ ../. ];
 
@@ -22,9 +28,7 @@ in {
     ] (lib.attrNames config.users.groups);
     shell = pkgs.nushell;
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
-    openssh.authorizedKeys.keys =
-      with lib.importJSON "${inputs.secrets}/public.json";
-      users."${username}".ssh;
+    openssh.authorizedKeys.keys = sshPubKeys;
   };
 
   services.pcscd.enable = true;

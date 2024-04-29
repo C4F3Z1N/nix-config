@@ -14,11 +14,16 @@
   programs = {
     gpg = {
       enable = true;
-      publicKeys = with lib.importJSON "${inputs.secrets}/public.json";
-        map (text: {
+      publicKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
+        (lib.importJSON)
+        ({ hosts, users, ... }: hosts // users)
+        (lib.attrValues)
+        (lib.catAttrs "pgp")
+        (map (text: {
           inherit text;
           trust = 5;
-        }) users."${config.home.username}".gpg;
+        }))
+      ];
     };
 
     ssh = {

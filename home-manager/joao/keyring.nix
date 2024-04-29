@@ -4,6 +4,7 @@
     john
     monkeysphere
     openssl
+    paperkey
     pgpdump
     sops
     ssh-to-age

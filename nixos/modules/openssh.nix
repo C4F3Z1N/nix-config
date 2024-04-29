@@ -1,13 +1,6 @@
 { config, inputs, lib, pkgs, ... }:
 let
   inherit (config.networking) hostName;
-  inherit (config.system.nixos) tags;
-  impermanence = builtins.elem "impermanence" tags;
-  prefix = lib.optionalString impermanence (lib.pipe config.environment [
-    ({ persistence ? { "" = null; }, ... }: persistence)
-    (lib.attrNames)
-    (builtins.head)
-  ]);
   filterSshKeys =
     lib.filterAttrs (type: _: builtins.elem type [ "ecdsa" "ed25519" "rsa" ]);
   hostPubKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
@@ -19,10 +12,11 @@ in {
   services.openssh = {
     startWhenNeeded = true;
 
-    hostKeys = map (type: {
+    # use public keys to force 'HostKeyAgent' lookup;
+    hostKeys = lib.mapAttrsToList (type: key: {
       inherit type;
-      path = "${prefix}/etc/ssh/ssh_host_${type}_key";
-    }) [ "ecdsa" "ed25519" "rsa" ];
+      path = pkgs.writeText "${hostName}-${type}.pub" key;
+    }) hostPubKeys."${hostName}";
 
     settings = {
       PasswordAuthentication = false;

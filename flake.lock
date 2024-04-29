@@ -2,12 +2,8 @@
   "nodes": {
     "devshell": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "flake-utils": ["flake-utils"],
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1713532798,
@@ -24,9 +20,7 @@
     },
     "disko": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1713875178,
@@ -57,9 +51,7 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ]
+        "nixpkgs-lib": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1712014858,
@@ -76,9 +68,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": [
-          "systems"
-        ]
+        "systems": ["systems"]
       },
       "locked": {
         "lastModified": 1710146030,
@@ -95,9 +85,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1713906585,
@@ -199,18 +187,14 @@
         "url": "ssh://git@github.com/c4f3z1n/secrets.git"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/c4f3z1n/secrets.git"
+        "id": "secrets",
+        "type": "indirect"
       }
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-stable": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"],
+        "nixpkgs-stable": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1713892811,
@@ -241,9 +225,7 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1711963903,

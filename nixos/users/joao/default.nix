@@ -31,11 +31,6 @@ in {
     openssh.authorizedKeys.keys = sshPubKeys;
   };
 
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
-  programs.ssh.startAgent = false;
-
   sops.secrets = let
     format = "json";
     neededForUsers = true;

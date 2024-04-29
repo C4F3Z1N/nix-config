@@ -9,7 +9,7 @@
       options = "--delete-older-than 4d";
     };
 
-    registry = with lib.importJSON "${inputs.self}/flake.lock"; {
+    registry = with lib.importJSON ../../flake.lock; {
       secrets.to = builtins.removeAttrs nodes.secrets.locked [
         "lastModified"
         "narHash"

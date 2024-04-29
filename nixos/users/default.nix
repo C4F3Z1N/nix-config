@@ -1,4 +1,4 @@
-{ config, inputs, lib, ... }: {
+{ config, inputs, lib, pkgs, ... }: {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   home-manager = {
@@ -20,4 +20,9 @@
     (lib.flatten)
     (lib.concatLines)
   ];
+
+  services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  programs.ssh.startAgent = false;
 }

@@ -1,5 +1,6 @@
-{ inputs, config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 let
+  inherit (config.networking) hostName;
   inherit (config.system.nixos) tags;
   impermanence = builtins.elem "impermanence" tags;
   prefix = lib.optionalString impermanence (lib.pipe config.environment [
@@ -7,11 +8,12 @@ let
     (lib.attrNames)
     (builtins.head)
   ]);
-  githubKnownHosts = lib.pipe inputs.github-metadata [
+  filterSshKeys =
+    lib.filterAttrs (type: _: builtins.elem type [ "ecdsa" "ed25519" "rsa" ]);
+  hostPubKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
     (lib.importJSON)
-    ({ ssh_keys, ... }: map (key: "github.com ${key}") ssh_keys)
-    (lib.concatLines)
-    (pkgs.writeText "known_hosts-github.com")
+    (builtins.getAttr "hosts")
+    (lib.mapAttrs (_: keys: filterSshKeys keys))
   ];
 in {
   services.openssh = {
@@ -29,11 +31,12 @@ in {
     };
   };
 
-  programs.ssh = {
-    extraConfig = lib.pipe config.services.openssh.hostKeys [
-      (map ({ path, ... }: "IdentityFile ${path}"))
-      (lib.concatLines)
-    ];
-    knownHostsFiles = lib.mkAfter [ githubKnownHosts ];
-  };
+  programs.ssh.knownHostsFiles = lib.pipe hostPubKeys [
+    (lib.mapAttrsToList (name: keys:
+      lib.pipe keys [ (lib.attrValues) (map (key: "${name} ${key}")) ]))
+    (lib.flatten)
+    (lib.concatLines)
+    (pkgs.writeText "known_hosts")
+    (lib.singleton)
+  ];
 }

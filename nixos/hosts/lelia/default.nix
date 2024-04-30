@@ -54,14 +54,15 @@
     sudo.wheelNeedsPassword = false;
   };
 
-  time.timeZone = lib.mkDefault "Europe/Copenhagen";
+  time.timeZone = "Europe/Copenhagen";
 
   i18n = {
     defaultLocale = "en_DK.UTF-8";
-    supportedLocales = lib.mkDefault [
+    supportedLocales = [
       "en_DK.UTF-8/UTF-8"
       "en_US.UTF-8/UTF-8"
       "pt_BR.UTF-8/UTF-8"
+      "sv_SE.UTF-8/UTF-8"
     ];
   };
 
@@ -130,13 +131,11 @@
     lxd.recommendedSysctlSettings = true;
   };
 
-  sops.defaultSopsFile =
-    "${inputs.secrets}/sops/hosts/${config.networking.hostName}.json";
   sops.secrets.luks_password.neededForUsers = true;
 
   nixpkgs = {
     config.allowUnfree = true;
-    hostPlatform = lib.mkDefault "x86_64-linux";
+    hostPlatform = "x86_64-linux";
   };
 
   system.autoUpgrade.enable = true;

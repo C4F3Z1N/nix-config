@@ -1,4 +1,11 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  environment = lib.pipe config.environment [
+    ({ variables, sessionVariables, ... }: variables // sessionVariables)
+    (lib.filterAttrs
+      (name: _: builtins.elem name [ "GNUPGHOME" "SSH_AUTH_SOCK" ]))
+  ];
+in {
   system.autoUpgrade = {
     dates = "hourly";
     flags = [ "--print-build-logs" ];
@@ -6,6 +13,7 @@
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {
+    inherit environment;
     path = with pkgs; [ nix nushell ];
     serviceConfig.ExecCondition = pkgs.writeTextFile {
       executable = true;

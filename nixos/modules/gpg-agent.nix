@@ -42,7 +42,7 @@ in {
     };
   };
 
-  environment.variables = { inherit GNUPGHOME SSH_AUTH_SOCK; };
+  environment.sessionVariables = { inherit GNUPGHOME SSH_AUTH_SOCK; };
 
   services.openssh.extraConfig = "HostKeyAgent ${SSH_AUTH_SOCK}";
 }

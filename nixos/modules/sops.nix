@@ -1,5 +1,6 @@
 { config, inputs, lib, ... }:
 let
+  inherit (config.networking) hostName;
   prefix = lib.pipe config.environment [
     ({ persistence ? { "" = null; }, ... }: persistence)
     (lib.attrNames)
@@ -11,6 +12,7 @@ in {
 
   sops = {
     age = { inherit sshKeyPaths; };
+    defaultSopsFile = "${inputs.secrets}/sops/hosts/${hostName}.json";
     gnupg = {
       inherit sshKeyPaths;
       home = "${prefix}/etc/gnupg";

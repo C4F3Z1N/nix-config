@@ -2,7 +2,7 @@
 let
   inherit (inputs.self) nixosConfigurations;
 
-  lib = inputs.nixpkgs.lib // inputs.home-manager.lib;
+  lib = with inputs; nixpkgs.lib // home-manager.lib;
 
   rawContent = lib.pipe ./. [
     (builtins.readDir)

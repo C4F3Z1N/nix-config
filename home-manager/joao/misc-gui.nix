@@ -1,4 +1,6 @@
-{ config, lib, osConfig, pkgs, ... }: {
+{ config, lib, osConfig, pkgs, ... }:
+let isGnome = osConfig.services.xserver.desktopManager.gnome.enable;
+in {
   home.packages = with pkgs; [
     libreoffice
     slack
@@ -9,9 +11,11 @@
   ];
 
   dconf.settings = lib.mkMerge [
-    (lib.mkIf osConfig.services.xserver.desktopManager.gnome.enable {
-      "org/gnome/Console" =
-        lib.mkIf config.programs.tmux.enable { shell = [ "tmux" "attach" ]; };
+    (lib.mkIf isGnome {
+      "org/gnome/Console" = {
+        font-scale = 1.3;
+        shell = lib.optionals config.programs.tmux.enable [ "tmux" "attach" ];
+      };
       "org/gnome/desktop/datetime".automatic-timezone = true;
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
       "org/gnome/mutter".experimental-features =
@@ -40,8 +44,5 @@
   ];
 
   services.copyq.enable = true;
-  services.gpg-agent =
-    lib.mkIf osConfig.services.xserver.desktopManager.gnome.enable {
-      pinentryPackage = pkgs.pinentry-gnome;
-    };
+  services.gpg-agent.pinentryPackage = lib.mkIf isGnome pkgs.pinentry-gnome;
 }

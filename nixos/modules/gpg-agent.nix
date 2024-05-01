@@ -4,17 +4,15 @@ let
   SSH_AUTH_SOCK = "${GNUPGHOME}/S.gpg-agent.ssh";
 in {
   systemd = {
-    services = {
-      host-gpg-agent = rec {
-        environment.GNUPGHOME = config.sops.gnupg.home;
-        after = requires;
-        requires = [ "host-gpg-agent-ssh.socket" "host-gpg-agent.socket" ];
-        serviceConfig = {
-          ExecReload = "${pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
-          ExecStart = "${pkgs.gnupg}/bin/gpg-agent --supervised";
-        };
-        unitConfig.RefuseManualStart = true;
+    services.host-gpg-agent = rec {
+      environment = { inherit GNUPGHOME; };
+      after = requires;
+      requires = [ "host-gpg-agent-ssh.socket" "host-gpg-agent.socket" ];
+      serviceConfig = {
+        ExecReload = "${pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
+        ExecStart = "${pkgs.gnupg}/bin/gpg-agent --supervised";
       };
+      # unitConfig.RefuseManualStart = true;
     };
 
     sockets = {

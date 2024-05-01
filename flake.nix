@@ -50,12 +50,12 @@
         ...
       }: {
         devshells.default = {
-          packages = with (pkgs // inputs'.disko.packages); [
+          packages = with pkgs; [
             age
             curl
-            disko
             gitMinimal
             gnupg
+            inputs'.disko.packages.disko
             nixos-anywhere
             nixos-install-tools
             nushell

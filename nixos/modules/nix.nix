@@ -15,6 +15,7 @@
         "narHash"
         "rev"
         "revCount"
+        "shortRev"
       ];
       self.flake = inputs.self;
     };

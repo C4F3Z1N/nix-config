@@ -8,6 +8,13 @@ let
     (builtins.getAttr "hosts")
     (builtins.mapAttrs (_: keys: filterSshKeys keys))
   ];
+  customKnownHosts = lib.pipe hostPubKeys [
+    (lib.mapAttrsToList (name: keys:
+      lib.pipe keys [ (builtins.attrValues) (map (key: "${name} ${key}")) ]))
+    (lib.flatten)
+    (lib.concatLines)
+    (pkgs.writeText "known_hosts")
+  ];
 in {
   services.openssh = {
     startWhenNeeded = true;
@@ -25,12 +32,5 @@ in {
     };
   };
 
-  programs.ssh.knownHostsFiles = lib.pipe hostPubKeys [
-    (lib.mapAttrsToList (name: keys:
-      lib.pipe keys [ (builtins.attrValues) (map (key: "${name} ${key}")) ]))
-    (lib.flatten)
-    (lib.concatLines)
-    (pkgs.writeText "known_hosts")
-    (lib.singleton)
-  ];
+  programs.ssh.knownHostsFiles = [ customKnownHosts ];
 }

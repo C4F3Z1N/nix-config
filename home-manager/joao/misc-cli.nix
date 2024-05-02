@@ -3,10 +3,12 @@
     (google-cloud-sdk.withExtraComponents
       [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     home-manager
+    htop
     rclone
   ];
 
   programs = {
+    bat.enable
     ripgrep.enable = true;
 
     git = {

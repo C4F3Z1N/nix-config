@@ -12,6 +12,8 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.inputs.systems.follows = "systems";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix.inputs.flake-compat.follows = "flake-compat";
+    nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,6 +31,7 @@
     flake-utils,
     home-manager,
     impermanence,
+    nix,
     nixos-hardware,
     nixpkgs,
     sops-nix,

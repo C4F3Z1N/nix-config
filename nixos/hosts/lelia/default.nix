@@ -133,10 +133,7 @@
 
   sops.secrets.luks_password.neededForUsers = true;
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    hostPlatform = "x86_64-linux";
-  };
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   system.autoUpgrade.enable = true;
   system.stateVersion = "23.11";

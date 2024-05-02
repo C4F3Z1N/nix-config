@@ -22,7 +22,7 @@
 
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "flakes" "nix-command" "repl-flake" ];
+      experimental-features = [ "ca-derivations" "flakes" "nix-command" ];
       flake-registry = import inputs.nix-registry { inherit pkgs; };
       nix-path = config.nix.nixPath;
 

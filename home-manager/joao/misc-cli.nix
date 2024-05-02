@@ -8,7 +8,7 @@
   ];
 
   programs = {
-    bat.enable
+    bat.enable = true;
     ripgrep.enable = true;
 
     git = {

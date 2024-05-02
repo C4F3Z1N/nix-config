@@ -1,15 +1,12 @@
-{ inputs }:
-let inherit (inputs.nixpkgs) lib;
-in rec {
+{ inputs, lib }:
+let
   rawContent = lib.pipe ./. [
     (builtins.readDir)
     (lib.filterAttrs (name: _: name != "default.nix"))
     (builtins.mapAttrs (name: _: ./. + "/${name}"))
   ];
-
-  nixosConfigurations = builtins.mapAttrs (_: modulePath:
-    lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [ modulePath ];
-    }) rawContent;
-}
+in builtins.mapAttrs (_: modulePath:
+  lib.nixosSystem {
+    specialArgs = { inherit inputs; };
+    modules = [ modulePath ];
+  }) rawContent

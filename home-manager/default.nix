@@ -1,8 +1,7 @@
-{ inputs }:
+{ inputs, lib }:
 let
+  inherit (inputs.home-manager.lib) homeManagerConfiguration;
   inherit (inputs.self) nixosConfigurations;
-
-  lib = with inputs; nixpkgs.lib // home-manager.lib;
 
   rawContent = lib.pipe ./. [
     (builtins.readDir)
@@ -25,17 +24,13 @@ let
     # convert list to attrSet;
     (builtins.listToAttrs)
   ];
-in {
-  inherit rawContent;
-
-  homeConfigurations = builtins.mapAttrs (_:
-    { modulePath, nixosHost }:
-    lib.homeManagerConfiguration {
-      inherit (nixosHost) pkgs;
-      extraSpecialArgs = {
-        inherit inputs;
-        osConfig = nixosHost.config;
-      };
-      modules = [ modulePath ];
-    }) combinations;
-}
+in builtins.mapAttrs (_:
+  { modulePath, nixosHost }:
+  homeManagerConfiguration {
+    inherit (nixosHost) pkgs;
+    extraSpecialArgs = {
+      inherit inputs;
+      osConfig = nixosHost.config;
+    };
+    modules = [ modulePath ];
+  }) combinations

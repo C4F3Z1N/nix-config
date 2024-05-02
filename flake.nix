@@ -42,9 +42,9 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [devshell.flakeModule treefmt-nix.flakeModule];
 
-      flake = {
-        inherit (import ./home-manager {inherit inputs;}) homeConfigurations;
-        inherit (import ./nixos/hosts {inherit inputs;}) nixosConfigurations;
+      flake = {lib, ...}: {
+        homeConfigurations = import ./home-manager {inherit inputs lib;};
+        nixosConfigurations = import ./nixos/hosts {inherit inputs lib;};
       };
 
       perSystem = {

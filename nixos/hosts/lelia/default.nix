@@ -133,6 +133,12 @@
 
   sops.secrets.luks_password.neededForUsers = true;
 
+  # TODO: modularize this setting;
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryHigh = "8G";
+    MemoryMax = "10G";
+  };
+
   nixpkgs.hostPlatform = "x86_64-linux";
 
   system.autoUpgrade.enable = true;

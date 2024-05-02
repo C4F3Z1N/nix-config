@@ -2,7 +2,7 @@
 let
   filePath = ../hosts + "/${config.networking.hostName}/persistence.json";
   persistence = lib.importJSON filePath;
-  mountPoints = lib.attrNames persistence;
+  mountPoints = builtins.attrNames persistence;
 in {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 

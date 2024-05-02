@@ -6,7 +6,7 @@ let
     (lib.importJSON)
     (lib.getAttrFromPath [ "users" username ])
     (lib.filterAttrs (type: _: builtins.elem type [ "ecdsa" "ed25519" "rsa" ]))
-    (lib.attrValues)
+    (builtins.attrValues)
   ];
 in {
   imports = [ ../. ];
@@ -25,7 +25,7 @@ in {
       "networkmanager"
       "podman"
       "wheel"
-    ] (lib.attrNames config.users.groups);
+    ] (builtins.attrNames config.users.groups);
     shell = pkgs.nushell;
     hashedPasswordFile = config.sops.secrets."${username}/password".path;
     openssh.authorizedKeys.keys = sshPubKeys;
@@ -37,7 +37,7 @@ in {
     sopsFile = "${inputs.secrets}/sops/users/${username}.json";
   in lib.pipe sopsFile [
     (lib.importJSON)
-    (lib.attrNames)
+    (builtins.attrNames)
     (map (key:
       lib.mkIf (key != "sops") {
         "${username}/${key}" = { inherit format key neededForUsers sopsFile; };

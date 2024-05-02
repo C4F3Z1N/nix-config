@@ -18,7 +18,7 @@
       publicKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
         (lib.importJSON)
         ({ hosts, users, ... }: hosts // users)
-        (lib.attrValues)
+        (builtins.attrValues)
         (lib.catAttrs "pgp")
         (map (text: {
           inherit text;

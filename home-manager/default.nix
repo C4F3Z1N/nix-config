@@ -7,12 +7,12 @@ let
   rawContent = lib.pipe ./. [
     (builtins.readDir)
     (lib.filterAttrs (name: _: name != "default.nix"))
-    (lib.mapAttrs (name: _: ./. + "/${name}"))
+    (builtins.mapAttrs (name: _: ./. + "/${name}"))
   ];
 
   combinations = lib.pipe {
-    user = lib.attrNames rawContent;
-    host = lib.attrNames nixosConfigurations;
+    user = builtins.attrNames rawContent;
+    host = builtins.attrNames nixosConfigurations;
   } [
     # create all possible combinations of user + host;
     (lib.cartesianProductOfSets)
@@ -28,7 +28,7 @@ let
 in {
   inherit rawContent;
 
-  homeConfigurations = lib.mapAttrs (_:
+  homeConfigurations = builtins.mapAttrs (_:
     { modulePath, nixosHost }:
     lib.homeManagerConfiguration {
       inherit (nixosHost) pkgs;

@@ -3,7 +3,7 @@ let
   inherit (config.networking) hostName;
   prefix = lib.pipe config.environment [
     ({ persistence ? { "" = null; }, ... }: persistence)
-    (lib.attrNames)
+    (builtins.attrNames)
     (builtins.head)
   ];
   sshKeyPaths = lib.mkForce [ ];

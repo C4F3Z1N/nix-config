@@ -8,7 +8,7 @@
   };
 
   environment.etc.shells.text = lib.pipe config.users.users [
-    (lib.attrValues)
+    (builtins.attrValues)
     (builtins.filter ({ isNormalUser, ... }: isNormalUser))
     (map ({ shell, ... }:
       let

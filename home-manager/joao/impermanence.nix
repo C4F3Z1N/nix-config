@@ -1,7 +1,7 @@
 { config, inputs, lib, osConfig, ... }:
 let
   allowOther = osConfig.programs.fuse.userAllowOther;
-  mountPoints = lib.attrNames osConfig.environment.persistence;
+  mountPoints = builtins.attrNames osConfig.environment.persistence;
   mainPath = (builtins.head mountPoints) + config.home.homeDirectory;
 in {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];

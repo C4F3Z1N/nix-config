@@ -4,10 +4,10 @@ in rec {
   rawContent = lib.pipe ./. [
     (builtins.readDir)
     (lib.filterAttrs (name: _: name != "default.nix"))
-    (lib.mapAttrs (name: _: ./. + "/${name}"))
+    (builtins.mapAttrs (name: _: ./. + "/${name}"))
   ];
 
-  nixosConfigurations = lib.mapAttrs (_: modulePath:
+  nixosConfigurations = builtins.mapAttrs (_: modulePath:
     lib.nixosSystem {
       specialArgs = { inherit inputs; };
       modules = [ modulePath ];

@@ -6,7 +6,7 @@ let
   hostPubKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
     (lib.importJSON)
     (builtins.getAttr "hosts")
-    (lib.mapAttrs (_: keys: filterSshKeys keys))
+    (builtins.mapAttrs (_: keys: filterSshKeys keys))
   ];
 in {
   services.openssh = {
@@ -27,7 +27,7 @@ in {
 
   programs.ssh.knownHostsFiles = lib.pipe hostPubKeys [
     (lib.mapAttrsToList (name: keys:
-      lib.pipe keys [ (lib.attrValues) (map (key: "${name} ${key}")) ]))
+      lib.pipe keys [ (builtins.attrValues) (map (key: "${name} ${key}")) ]))
     (lib.flatten)
     (lib.concatLines)
     (pkgs.writeText "known_hosts")

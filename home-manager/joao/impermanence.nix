@@ -26,16 +26,11 @@ in {
       "copyq"
       "gcloud"
       "home-manager"
+      "nushell"
       "qutebrowser"
       "rclone"
       "Slack"
       "sops"
     ] ++ map (d: ".local/share/${d}") [ "direnv" "nix" "pueue" "qutebrowser" ];
-
-    files = map (f: ".config/${f}") [
-      "monitors.xml"
-      "monitors.xml~"
-      "nushell/history.txt"
-    ];
   };
 }

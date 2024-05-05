@@ -26,6 +26,7 @@ in {
           SocketMode = "0600";
         };
       };
+
       host-gpg-agent-ssh = {
         partOf = [ "host-gpg-agent.service" ];
         wantedBy = [ "sockets.target" ];

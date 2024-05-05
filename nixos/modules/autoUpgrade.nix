@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   environment = lib.pipe config.environment [
-    ({ variables, sessionVariables, ... }: variables // sessionVariables)
+    ({ sessionVariables, variables, ... }: variables // sessionVariables)
     (lib.filterAttrs
       (name: _: builtins.elem name [ "GNUPGHOME" "SSH_AUTH_SOCK" ]))
   ];

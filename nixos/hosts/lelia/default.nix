@@ -125,9 +125,9 @@
   };
 
   virtualisation = {
-    podman.enable = true;
-    libvirtd.enable = true;
     incus.enable = true;
+    libvirtd.enable = true;
+    podman.enable = true;
   };
 
   sops.secrets.luks_password.neededForUsers = true;

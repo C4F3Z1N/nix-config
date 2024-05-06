@@ -125,7 +125,7 @@
   };
 
   virtualisation = {
-    docker.enable = true;
+    podman.enable = true;
     libvirtd.enable = true;
     lxd.enable = true;
     lxd.recommendedSysctlSettings = true;

@@ -127,8 +127,7 @@
   virtualisation = {
     podman.enable = true;
     libvirtd.enable = true;
-    lxd.enable = true;
-    lxd.recommendedSysctlSettings = true;
+    incus.enable = true;
   };
 
   sops.secrets.luks_password.neededForUsers = true;

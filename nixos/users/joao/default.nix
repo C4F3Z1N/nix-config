@@ -19,9 +19,8 @@ in {
     description = displayName;
     extraGroups = lib.intersectLists [
       # add user to the groups below if they exist;
-      "docker"
+      "incus-admin"
       "libvirtd"
-      "lxd"
       "networkmanager"
       "podman"
       "wheel"

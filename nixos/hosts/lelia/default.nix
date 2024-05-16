@@ -71,6 +71,7 @@
   location.provider = "geoclue2";
 
   services = {
+    host-gpg-agent.enable = true;
     openssh.enable = true;
     usbmuxd.enable = true;
     zfs.autoScrub.enable = true;

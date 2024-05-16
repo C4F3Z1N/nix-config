@@ -1,23 +1,5 @@
 {
   "nodes": {
-    "devshell": {
-      "inputs": {
-        "flake-utils": ["flake-utils"],
-        "nixpkgs": ["nixpkgs"]
-      },
-      "locked": {
-        "lastModified": 1713532798,
-        "narHash": "sha256-wtBhsdMJA3Wa32Wtm1eeo84GejtI43pMrFrmwLXrsEc=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "12e914740a25ea1891ec619bb53cf5e6ca922e40",
-        "type": "github"
-      },
-      "original": {
-        "id": "devshell",
-        "type": "indirect"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": ["nixpkgs"]
@@ -63,23 +45,6 @@
       },
       "original": {
         "id": "flake-parts",
-        "type": "indirect"
-      }
-    },
-    "flake-utils": {
-      "inputs": {
-        "systems": ["systems"]
-      },
-      "locked": {
-        "lastModified": 1710146030,
-        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
-        "type": "github"
-      },
-      "original": {
-        "id": "flake-utils",
         "type": "indirect"
       }
     },
@@ -211,11 +176,9 @@
     },
     "root": {
       "inputs": {
-        "devshell": "devshell",
         "disko": "disko",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
-        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix": "nix",

@@ -24,7 +24,6 @@ in {
       "chromium"
       "Code"
       "copyq"
-      "gcloud"
       "home-manager"
       "nushell"
       "qutebrowser"

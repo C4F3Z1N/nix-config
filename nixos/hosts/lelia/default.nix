@@ -6,6 +6,7 @@
     ./disko-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
+    self.nixosModules.host-gpg-agent
   ];
 
   boot = {

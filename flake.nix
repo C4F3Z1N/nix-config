@@ -40,6 +40,7 @@
       flake = {lib, ...}: {
         homeConfigurations = import ./home-manager {inherit inputs lib;};
         nixosConfigurations = import ./nixos/hosts {inherit inputs lib;};
+        nixosModules = import ./modules/nixos {inherit lib;};
       };
 
       perSystem.treefmt.config = {

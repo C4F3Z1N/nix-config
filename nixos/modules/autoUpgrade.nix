@@ -9,7 +9,7 @@ in {
   system.autoUpgrade = {
     dates = "hourly";
     flags = [ "--print-build-logs" ];
-    flake = "github:c4f3z1n/nix-config";
+    flake = "git+ssh://git@github.com/c4f3z1n/nix-config.git";
   };
 
   systemd.services.nixos-upgrade = lib.mkIf config.system.autoUpgrade.enable {

@@ -6,16 +6,18 @@ let
     (builtins.attrNames)
     (builtins.head)
   ];
-  sshKeyPaths = lib.mkForce [ ];
+  GNUPGHOME = "${prefix}/opt/gnupg/${hostName}";
 in {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
-  sops = {
-    age = { inherit sshKeyPaths; };
+  services.host-gpg-agent.homedir = GNUPGHOME;
+
+  sops = rec {
+    age.sshKeyPaths = lib.mkForce [ ];
     defaultSopsFile = "${inputs.secrets}/sops/hosts/${hostName}.json";
     gnupg = {
-      inherit sshKeyPaths;
-      home = "${prefix}/etc/gnupg";
+      inherit (age) sshKeyPaths;
+      home = GNUPGHOME;
     };
   };
 }

@@ -139,6 +139,8 @@
     MemoryMax = "10G";
   };
 
+  nix.sshServe.enable = true;
+
   nixpkgs.hostPlatform = "x86_64-linux";
 
   system.autoUpgrade.enable = true;

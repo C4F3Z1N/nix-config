@@ -9,5 +9,6 @@
     ./nixpkgs.nix
     ./openssh.nix
     ./sops.nix
+    ./sshServe.nix
   ];
 }

@@ -77,6 +77,16 @@
     zfs.autoScrub.enable = true;
     zfs.trim.enable = true;
 
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery.governor = "powersave";
+        battery.turbo = "never";
+        charger.governor = "performance";
+        charger.turbo = "auto";
+      };
+    };
+
     gnome.gnome-keyring.enable = lib.mkForce false;
 
     geoclue2.enableWifi = false;

@@ -4,7 +4,7 @@ let
   cfg = config.services.host-gpg-agent;
   envVars = {
     GNUPGHOME = cfg.homedir;
-    SSH_AUTH_SOCK = "/run/host-gpg-agent/S.gpg-agent.ssh";
+    SSH_AUTH_SOCK = "${cfg.runtimedir}/S.gpg-agent.ssh";
   };
 in {
   options.services.host-gpg-agent = with types; {
@@ -21,6 +21,11 @@ in {
     package = mkOption {
       type = package;
       default = config.programs.gnupg.package;
+    };
+
+    runtimedir = mkOption {
+      type = path;
+      default = "/run/host-gpg-agent";
     };
 
     verbose = mkOption {
@@ -68,7 +73,7 @@ in {
             DirectoryMode = "0700";
             ExecStartPre = "${pkgs.coreutils}/bin/rm -fv ${Symlinks}";
             FileDescriptorName = "std";
-            ListenStream = "/run/host-gpg-agent/S.gpg-agent";
+            ListenStream = "${cfg.runtimedir}/S.gpg-agent";
             SocketMode = "0600";
             Symlinks = "${cfg.homedir}/${builtins.baseNameOf ListenStream}";
           };

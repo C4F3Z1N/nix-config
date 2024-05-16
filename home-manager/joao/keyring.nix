@@ -15,6 +15,7 @@
   programs = {
     gpg = {
       enable = true;
+      mutableKeys = false;
       publicKeys = lib.pipe "${inputs.secrets}/public-keys.json" [
         (lib.importJSON)
         ({ hosts, users, ... }: hosts // users)

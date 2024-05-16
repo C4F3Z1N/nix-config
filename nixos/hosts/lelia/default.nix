@@ -139,7 +139,13 @@
     MemoryMax = "10G";
   };
 
-  nix.sshServe.enable = true;
+  nix = {
+    # TODO: tune this accordingly;
+    # https://nixos.org/manual/nix/unstable/advanced-topics/cores-vs-jobs.html
+    settings.cores = 3;
+    settings.max-jobs = 3;
+    sshServe.enable = true;
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
